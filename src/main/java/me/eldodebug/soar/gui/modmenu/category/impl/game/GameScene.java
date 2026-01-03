@@ -1,9 +1,7 @@
 package me.eldodebug.soar.gui.modmenu.category.impl.game;
 
 import eu.shoroa.contrib.render.Blur;
-import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.gui.modmenu.category.impl.GamesCategory;
-import me.eldodebug.soar.gui.modmenu.category.impl.game.impl.DeltaTime;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;

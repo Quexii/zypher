@@ -1,3 +1,8 @@
+/*
+ * Nanovg Blur
+ * © Shoroa 2026, All Rights Reserved
+ */
+
 package eu.shoroa.contrib.render;
 
 import eu.shoroa.contrib.shader.UIShader;
@@ -7,16 +12,12 @@ import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.asset.AssetManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;
-import net.minecraft.util.Util;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL2;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
@@ -24,8 +25,7 @@ import org.lwjgl.opengl.GL13;
 import java.io.IOException;
 
 public class Blur {
-
-    private static final UIShader shader = new UIShader("soar/shaders/vertex.vert", "soar/shaders/blur2.frag");
+    private static final UIShader shader = new UIShader("soar/shaders/vertex.vert", "soar/shaders/blur.frag");
 
     private static Framebuffer fboHalf = new Framebuffer(Minecraft.getMinecraft().displayWidth / 2, Minecraft.getMinecraft().displayHeight / 2, false);
     private static Framebuffer fboQuart = new Framebuffer(Minecraft.getMinecraft().displayWidth / 4, Minecraft.getMinecraft().displayHeight / 4, false);
@@ -80,10 +80,6 @@ public class Blur {
 
     public static void resize() {
         createFbos();
-        if (nvgImage != -1) {
-            NanoVG.nvgDeleteImage(Glide.getInstance().getNanoVGManager().getContext(), nvgImage);
-            nvgImage = -1;
-        }
     }
 
     public static void render() {
@@ -113,7 +109,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 2f, mc.displayHeight / 2f));
-        shader.uniform(Uniform.makeFloat("uRadius", 1.0f));
+        shader.uniform(Uniform.makeFloat("uRadius", 2f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -124,7 +120,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 4f, mc.displayHeight / 4f));
-        shader.uniform(Uniform.makeFloat("uRadius", 1.0f));
+        shader.uniform(Uniform.makeFloat("uRadius", 4f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -135,7 +131,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 8f, mc.displayHeight / 8f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f));
+        shader.uniform(Uniform.makeFloat("uRadius", 1f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -153,12 +149,10 @@ public class Blur {
         mc.getFramebuffer().bindFramebuffer(true);
 
         GL11.glEnable(GL11.GL_DEPTH_TEST);
-        GL11.glEnable(GL11.GL_BLEND);
     }
 
     public static void drawBlur(float x, float y, float w, float h, float radius) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
-        if(Util.getOSType() == Util.EnumOS.OSX) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
 
@@ -184,7 +178,6 @@ public class Blur {
 
     public static void drawBlur(Runnable r) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
-        if(Util.getOSType() == Util.EnumOS.OSX) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
         NVGPaint paint = NVGPaint.calloc();

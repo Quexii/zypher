@@ -2,10 +2,8 @@ package me.eldodebug.soar.management.mods;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.IOException;
 
 import eu.shoroa.contrib.render.Blur;
-import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiEditHUD;
 import me.eldodebug.soar.management.color.AccentColor;
@@ -16,7 +14,6 @@ import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
 import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Font;
-import eu.shoroa.contrib.shader.UIShader;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.ColorUtils;
 import net.minecraft.util.ResourceLocation;

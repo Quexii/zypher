@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import eu.shoroa.contrib.render.Blur;
-import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
