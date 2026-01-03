@@ -569,9 +569,9 @@ public class NanoVGManager {
 		}
 	}
 
-	public void drawImage(int texture, float x, float y, float width, float height, float alpha) {
+	public void drawImage(int texture, float x, float y, float width, float height, float alpha, int flags) {
 		
-		if(assetManager.loadImage(nvg, texture, width, height)) {
+		if(assetManager.loadImage(nvg, texture, width, height, flags)) {
 			
 			int image = assetManager.getImage(texture);
 			
@@ -587,6 +587,10 @@ public class NanoVGManager {
 	        
 	        p.free();
 		}
+	}
+
+	public void drawImage(int texture, float x, float y, float width, float height, float alpha) {
+		drawImage(texture, x, y, width, height, alpha, 0);
 	}
 	
 	public void drawImage(int texture, float x, float y, float width, float height) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
+import eu.shoroa.contrib.render.Blur;
 import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiEditHUD;
@@ -199,7 +200,8 @@ public class HUDMod extends Mod {
 		float x = this.x + (addX * scale);
 		float y = this.y + (addY * scale);
 
-		if (isBlur) ShBlur.getInstance().drawBlur(x,y,lastWidth,lastHeight,radius);
+//		if (isBlur) ShBlur.getInstance().drawBlur(x,y,lastWidth,lastHeight,radius);
+		if (isBlur) Blur.drawBlur(x,y,lastWidth,lastHeight,radius);
 
 		if(isNormal || isVanilla || isShadow || isDark || isLight || isModern) {
 			nvg.drawShadow(x, y, lastWidth, lastHeight, radius - 0.75F);

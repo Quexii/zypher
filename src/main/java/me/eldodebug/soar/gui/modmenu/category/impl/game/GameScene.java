@@ -1,5 +1,6 @@
 package me.eldodebug.soar.gui.modmenu.category.impl.game;
 
+import eu.shoroa.contrib.render.Blur;
 import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.gui.modmenu.category.impl.GamesCategory;
 import me.eldodebug.soar.gui.modmenu.category.impl.game.impl.DeltaTime;
@@ -70,7 +71,7 @@ public class GameScene {
 
 	public void drawBackground(NanoVGManager nvg, ColorPalette palette) {
 		if (InternalSettingsMod.getInstance().getBlurSetting().isToggled()) {
-			ShBlur.getInstance().drawBlur(() -> nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  palette.getBackgroundColor(ColorType.DARK)));
+			Blur.drawBlur(() -> nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  palette.getBackgroundColor(ColorType.DARK)));
 			Color colsidebar = palette.getBackgroundColor(ColorType.DARK);
 			nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  new Color(colsidebar.getRed(), colsidebar.getGreen(), colsidebar.getBlue(), 210));
 		} else {
