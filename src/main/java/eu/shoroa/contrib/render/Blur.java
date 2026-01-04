@@ -87,6 +87,9 @@ public class Blur {
             nvgImage = nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight);
         }
 
+        float settingStrength = InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat();
+
+        GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glDisable(GL11.GL_BLEND);
         ScaledResolution sr = new ScaledResolution(mc);
@@ -98,7 +101,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth, mc.displayHeight));
-        shader.uniform(Uniform.makeFloat("uRadius", 1.0f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 4f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -109,7 +112,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 2f, mc.displayHeight / 2f));
-        shader.uniform(Uniform.makeFloat("uRadius", 2f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 2f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -120,7 +123,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 4f, mc.displayHeight / 4f));
-        shader.uniform(Uniform.makeFloat("uRadius", 4f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -131,7 +134,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 8f, mc.displayHeight / 8f));
-        shader.uniform(Uniform.makeFloat("uRadius", 1f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -142,13 +145,12 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 4f, mc.displayHeight / 4f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 2));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
         mc.getFramebuffer().bindFramebuffer(true);
-
-        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glPopAttrib();
     }
 
     public static void drawBlur(float x, float y, float w, float h, float radius) {
