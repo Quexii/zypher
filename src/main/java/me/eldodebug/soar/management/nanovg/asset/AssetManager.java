@@ -26,16 +26,19 @@ public class AssetManager {
 	private HashMap<String, NVGAsset> imageCache = new HashMap<String, NVGAsset>();
 	private HashMap<Integer, Integer> glTextureCache = new HashMap<Integer, Integer>();
 	private HashMap<String, NVGAsset> svgCache = new HashMap<String, NVGAsset>();
-	
+
 	public boolean loadImage(long nvg, int texture, float width, float height) {
-		
+		return loadImage(glTextureCache.get(texture), texture, width, height, 0);
+	}
+
+	public boolean loadImage(long nvg, int texture, float width, float height, int flags) {
 		if(!glTextureCache.containsKey(texture)) {
-			
-			glTextureCache.put(texture, NanoVGGL2.nvglCreateImageFromHandle(nvg, texture, (int) width, - (int) height, 0));
-			
+
+			glTextureCache.put(texture, NanoVGGL2.nvglCreateImageFromHandle(nvg, texture, (int) width, - (int) height, flags));
+
 			return true;
 		}
-		
+
 		return true;
 	}
 	

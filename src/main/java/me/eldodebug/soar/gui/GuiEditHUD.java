@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import eu.shoroa.contrib.render.ShBlur;
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -79,7 +79,7 @@ public class GuiEditHUD extends GuiScreen {
 			nvg.save();
 			NanoVG.nvgGlobalAlpha(nvg.getContext(), (float) introAnimation.getValue());
 			if (InternalSettingsMod.getInstance().getBlurSetting().isToggled()) {
-				ShBlur.getInstance().drawBlur(() -> nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), Color.WHITE));
+				Blur.drawBlur(() -> nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), Color.WHITE));
 			}
 			nvg.restore();
 			nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0,0,0, (int) (introAnimation.getValue() * 100)));

@@ -1,31 +1,10 @@
 package me.eldodebug.soar.injection.mixin.mixins.gui;
 
-import eu.shoroa.contrib.render.ShBlur;
-import me.eldodebug.soar.Glide;
-import org.lwjgl.opengl.Display;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.At.Shift;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.gui.GuiEditHUD;
 import me.eldodebug.soar.gui.modmenu.GuiModMenu;
 import me.eldodebug.soar.injection.interfaces.IMixinGuiIngame;
-import me.eldodebug.soar.management.event.impl.EventRender2D;
-import me.eldodebug.soar.management.event.impl.EventRenderCrosshair;
-import me.eldodebug.soar.management.event.impl.EventRenderDamageTint;
-import me.eldodebug.soar.management.event.impl.EventRenderExpBar;
-import me.eldodebug.soar.management.event.impl.EventRenderNotification;
-import me.eldodebug.soar.management.event.impl.EventRenderPlayerStats;
-import me.eldodebug.soar.management.event.impl.EventRenderPumpkinOverlay;
-import me.eldodebug.soar.management.event.impl.EventRenderScoreboard;
-import me.eldodebug.soar.management.event.impl.EventRenderSelectedItem;
-import me.eldodebug.soar.management.event.impl.EventRenderTooltip;
-import me.eldodebug.soar.management.event.impl.EventRenderVisualizer;
+import me.eldodebug.soar.management.event.impl.*;
 import me.eldodebug.soar.management.mods.impl.AnimationsMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -39,6 +18,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.scoreboard.ScoreObjective;
 import net.minecraft.util.ResourceLocation;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.At.Shift;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiIngame.class)
 public abstract class MixinGuiIngame implements IMixinGuiIngame {
@@ -86,7 +73,7 @@ public abstract class MixinGuiIngame implements IMixinGuiIngame {
 
 	@Inject(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V", shift = At.Shift.BEFORE, ordinal = 2))
     public void postRenderGameOverlay(float partialTicks, CallbackInfo ci) {
-		ShBlur.getInstance().render();
+		Blur.render();
 
 		new EventRenderDamageTint(partialTicks).call();
 		
