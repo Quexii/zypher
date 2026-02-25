@@ -99,7 +99,7 @@ public enum TranslateText {
 	DAMAGE_TILT("text.damagetilt.name"), DAMAGE_TILT_DESCRIPTION("text.damagetilt.description"),
 	FPS_SPOOFER("text.fpsspoofer.name"), FPS_SPOOFER_DESCRIPTION("text.fpsspoorer.description"), MULTIPLIER("text.multiplier"),
 	HORSE_STATS("text.horsestats.name"), HORSE_STATS_DESCRIPTION("text.horsestats.description"), KILL_EFFECTS("text.killeffects.name"),
-	KILL_EFFECTS_DESCRIPTION("text.killeffects.description"), BLOOD("text.blood"), LIGHTING("text.lighting"), FLAMES("text.flames"),
+	KILL_EFFECTS_DESCRIPTION("text.killeffects.description"), BLOOD("text.blood"), PHYSICS("text.physics"), LIGHTING("text.lighting"), FLAMES("text.flames"),
 	CLOUD("text.cloud"), SOUND("text.sound"), EFFECT("text.effect"), NAMETAG("text.nametag.name"), NAMETAG_DESCRIPTION("text.nametag.description"),
 	MUSIC_INFO("text.musicinfo.name"), MUSIC_INFO_DESCRIPTION("text.musicinfo.description"), OVERLAY("text.overlay"), WAVEFORM("text.waveform"),
 	APPEARANCE("text.appearance"), APPEARANCE_DESCRIPTION("text.appearance.description"), LANGUAGE_DESCRIPTION("text.language.description"),
@@ -148,7 +148,7 @@ public enum TranslateText {
 	SEARCH_FAILED("text.search_failed"), SPOTIFY_AUTH_MANUAL_REQUIRED("Please authorize in the browser and then click 'Complete Authorization'"), SPOTIFY_AUTH_SUCCESS("Authorization completed successfully"), SPOTIFY_AUTH_TOKEN_RECEIVED("text.spotify.auth.token_received"),
 	SPOTIFY_NO_ACTIVE_DEVICE("text.spotify.no_active_device"), SPOTIFY_PLAYBACK_STARTED("text.spotify.playback.started"), SPOTIFY_FAIL_BROWSER("text.spotify.fail_browser"), SPOTIFY_CONNECT("text.spotify.connect"), AUTO_GL("text.autogl"), AUTO_GL_DELAY("text.autogldelay"),
 	UI_SOUNDS("text.ui.sounds"), UI_SOUNDS_DESCRIPTION("text.ui.sounds.description") ,EXIT_WORLD_SINGLEPLAYER("text.gamemenu.exitworldsingleplayer"), OPEN_MOD_MENU("text.gamemenu.openglidemenu"), EDIT_HUD("text.gamemenu.edithud"), GRADIENT_SIMPLE("text.gradientsimple"), GENERAL("text.general"),  GENERAL_DESCRIPTION("text.general.description"),
-	UI_BLUR("text.ui.blur"), BLUR_STRENGTH("text.blur.strength"), MC_FONT("text.hud.mcfont"), CHANGELOG("text.changelog"), NEWS("text.news"), SEARCH("text.search");
+	UI_BLUR("text.ui.blur"), BLUR_STRENGTH("text.blur.strength"), MC_FONT("text.hud.mcfont"), CHANGELOG("text.changelog"), NEWS("text.news"), SEARCH("text.search"), SUPERHEROFX_NAME("text.superherofx.name"), SUPERHEROFX_DESCRIPTION("text.superherofx.description");
 
 	private String key, text;
 

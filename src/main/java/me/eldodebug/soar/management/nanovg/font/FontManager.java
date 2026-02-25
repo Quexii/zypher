@@ -20,6 +20,7 @@ public class FontManager {
 		loadFont(nvg, Fonts.SEMIBOLD);
 		loadFont(nvg, Fonts.LEGACYICON);
 		loadFont(nvg, Fonts.MOJANGLES);
+		loadFont(nvg, Fonts.BANGERS);
 	}
 	
 	private void loadFont(long nvg, Font font) {
