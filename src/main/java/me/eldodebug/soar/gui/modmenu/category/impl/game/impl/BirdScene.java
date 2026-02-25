@@ -1,6 +1,5 @@
 package me.eldodebug.soar.gui.modmenu.category.impl.game.impl;
 
-import eu.shoroa.contrib.render.ShBlur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.modmenu.category.impl.GamesCategory;
 import me.eldodebug.soar.gui.modmenu.category.impl.game.GameScene;
@@ -8,7 +7,6 @@ import me.eldodebug.soar.management.color.AccentColor;
 import me.eldodebug.soar.management.color.ColorManager;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
-import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;

@@ -1,41 +1,16 @@
 package me.eldodebug.soar.injection.mixin.mixins.client;
 
-import eu.shoroa.contrib.render.ShBlur;
-import me.eldodebug.soar.utils.MacOSUtils;
-import net.minecraft.util.Util;
-import org.apache.commons.lang3.SystemUtils;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.opengl.Display;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiSplashScreen;
 import me.eldodebug.soar.injection.interfaces.IMixinEntityLivingBase;
 import me.eldodebug.soar.injection.interfaces.IMixinMinecraft;
-import me.eldodebug.soar.management.event.impl.EventClickMouse;
-import me.eldodebug.soar.management.event.impl.EventKey;
-import me.eldodebug.soar.management.event.impl.EventPreRenderTick;
-import me.eldodebug.soar.management.event.impl.EventRenderTick;
-import me.eldodebug.soar.management.event.impl.EventScrollMouse;
-import me.eldodebug.soar.management.event.impl.EventTick;
-import me.eldodebug.soar.management.event.impl.EventToggleFullscreen;
-import me.eldodebug.soar.management.event.impl.EventUpdateDisplay;
-import me.eldodebug.soar.management.event.impl.EventUpdateFramebufferSize;
+import me.eldodebug.soar.management.event.impl.*;
+import me.eldodebug.soar.management.mods.impl.AnimationsMod;
 import me.eldodebug.soar.management.mods.impl.FPSLimiterMod;
 import me.eldodebug.soar.management.mods.impl.FPSSpooferMod;
 import me.eldodebug.soar.management.mods.impl.HitDelayFixMod;
-import me.eldodebug.soar.management.mods.impl.AnimationsMod;
+import me.eldodebug.soar.utils.MacOSUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -54,6 +29,21 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Session;
 import net.minecraft.util.Timer;
+import net.minecraft.util.Util;
+import org.apache.commons.lang3.SystemUtils;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft implements IMixinMinecraft {
@@ -544,7 +534,7 @@ public abstract class MixinMinecraft implements IMixinMinecraft {
 	@Inject(method = "startGame", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiIngame;<init>(Lnet/minecraft/client/Minecraft;)V"))
 	public void splashGuiIngame(CallbackInfo callback) {
-		ShBlur.getInstance().init();
+		Blur.init();
 		updateDisplay();
 	}
 
@@ -555,6 +545,6 @@ public abstract class MixinMinecraft implements IMixinMinecraft {
 
 	@Inject(method = "resize", at = @At("TAIL"))
 	public void inject$resize(int width, int height, CallbackInfo ci) {
-		ShBlur.getInstance().resize();
+		Blur.resize();
 	}
 }
