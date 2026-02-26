@@ -135,12 +135,6 @@ public final class UIShader {
     }
 
     public void rect(float x, float y, float w, float h) {
-//        vbo.data(new float[]{
-//                x, y, 0f, 1f,
-//                x, y + h, 0f, 0f,
-//                x + w, y + h, 1f, 0f,
-//                x + w, y, 1f, 1f
-//        });
         vertexBuffer.clear();
         vertexBuffer.put(x).put(y).put(0).put(1);
         vertexBuffer.put(x).put(y + h).put(0).put(0);
