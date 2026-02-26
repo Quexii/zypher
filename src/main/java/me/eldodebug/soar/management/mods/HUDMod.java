@@ -233,9 +233,8 @@ public class HUDMod extends Mod {
 		}
 		if(isModern) {
 			nvg.drawRoundedRect(x, y, lastWidth, lastHeight, radius, new Color(0, 0, 0, 110));
-			nvg.drawOutlineRoundedRect(x - 0.5F, y - 0.5F, lastWidth + 1, lastHeight + 1, radius + 0.5F, 0.7F,  new Color(255,255,255,110));
+			nvg.drawOutlineRoundedRect(x, y, lastWidth, lastHeight, radius, .5F,  new Color(255,255,255,80));
 		}
-
 	}
 
 	public void drawBackground(float width, float height) {
@@ -253,8 +252,8 @@ public class HUDMod extends Mod {
 	public void drawText(String text, float addX, float addY, float size, Font font, Color color) {
 
 		if(font == Fonts.MOJANGLES) {
-			addX = addX  - 0.5F;
-			addY = addY  - 1.3F;
+			addX = addX - 0.5F;
+			addY = addY - 1.3F;
 		}
 
 		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();

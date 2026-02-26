@@ -90,6 +90,7 @@
     "scoreboard.MixinScoreboard",
     "server.MixinMinecraftServer",
     "settings.MixinGameSettings",
+    "shader.MixinFramebuffer",
     "shader.MixinShaderGroup",
     "texture.MixinTextureMap",
     "tileentity.MixinTileEntityBannerRenderer",

@@ -51,7 +51,7 @@ public class NanoVGManager {
 	
 	public NanoVGManager() {
 		
-		nvg = NanoVGGL2.nvgCreate(NanoVGGL2.NVG_ANTIALIAS);
+		nvg = NanoVGGL2.nvgCreate(NanoVGGL2.NVG_ANTIALIAS | NanoVGGL2.NVG_STENCIL_STROKES);
 		
 		if(nvg == 0) {
 			GlideLogger.error("Failed to create NanoVG context");
@@ -228,14 +228,22 @@ public class NanoVGManager {
 	}
 	
 	public void drawOutlineRoundedRect(float x, float y, float width, float height, float radius, float strokeWidth, Color color) {
-		
+
+		if (radius < 0.5f) {
+			radius = 0.5f;
+		}
+
 		NVGColor nvgColor = getColor(color);
 		
 		NanoVG.nvgBeginPath(nvg);
+		NanoVG.nvgRoundedRect(nvg, x-strokeWidth/2f, y-strokeWidth/2f, width+strokeWidth, height+strokeWidth, radius+strokeWidth/2f);
 		NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
-		NanoVG.nvgStrokeWidth(nvg, strokeWidth);
-		NanoVG.nvgStrokeColor(nvg, nvgColor);
-		NanoVG.nvgStroke(nvg);
+		NanoVG.nvgPathWinding(nvg, NanoVG.NVG_HOLE);
+		NanoVG.nvgFillColor(nvg, nvgColor);
+		NanoVG.nvgFill(nvg);
+//		NanoVG.nvgStrokeWidth(nvg, strokeWidth);
+//		NanoVG.nvgStrokeColor(nvg, nvgColor);
+//		NanoVG.nvgStroke(nvg);
 	}
 	
 	public void drawGradientOutlineRoundedRect(float x, float y, float width, float height, float radius, float strokeWidth, Color color1, Color color2) {
