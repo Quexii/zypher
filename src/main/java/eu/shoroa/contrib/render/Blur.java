@@ -12,6 +12,7 @@ import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
+import me.eldodebug.soar.types.Rect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;
@@ -178,6 +179,10 @@ public class Blur {
         NanoVG.nvgClosePath(ctx);
 
         paint.free();
+    }
+
+    public static void drawBlur(Rect rect, float radius) {
+        drawBlur(rect.x, rect.y, rect.width, rect.height, radius);
     }
 
     public static void drawBlur(Runnable r) {

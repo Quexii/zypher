@@ -126,7 +126,7 @@ public class ProfileCategory extends Category {
 			}
 			
 			if(p.getId() == 999) {
-				nvg.drawCenteredText(LegacyIcon.PLUS, this.getX() + offsetX + 14.5F + (123 / 2), this.getY() + offsetY + 13, palette.getFontColor(ColorType.DARK), 20, Fonts.LEGACYICON);
+				nvg.drawCenteredText(LegacyIcon.PLUS, this.getX() + offsetX + 14.5F + (123 / 2), this.getY() + offsetY + 23, palette.getFontColor(ColorType.DARK), 20, Fonts.LEGACYICON);
 			}else {
 				nvg.drawText(LegacyIcon.STAR, this.getX() + 62 + offsetX, this.getY() + 29 + offsetY, palette.getMaterialYellow(), 11, Fonts.LEGACYICON);
 				
@@ -189,7 +189,7 @@ public class ProfileCategory extends Category {
 		
 		nvg.drawRoundedRect(this.getX() + this.getWidth() - 124, this.getY() + this.getHeight() - 44, 
 				100, 21, 6, palette.getBackgroundColor(ColorType.NORMAL));
-		nvg.drawCenteredText(TranslateText.CREATE.getText(), this.getX() + this.getWidth() - 124 + 50, this.getY() + this.getHeight() - 37.5F,
+		nvg.drawCenteredText(TranslateText.CREATE.getText(), this.getX() + this.getWidth() - 124 + 50, this.getY() + this.getHeight() - 37.5F+5,
 				palette.getFontColor(ColorType.DARK), 10, Fonts.REGULAR);
 		
 		nvg.restore();
@@ -312,7 +312,7 @@ public class ProfileCategory extends Category {
 			}
 		}
 		
-		if(mouseButton == 3) {
+		if(mouseButton == 3 || mouseButton == 1) {
 			openProfile = false;
 		}
 	}

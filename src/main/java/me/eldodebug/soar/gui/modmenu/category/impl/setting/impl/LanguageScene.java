@@ -52,7 +52,7 @@ public class LanguageScene extends SettingScene {
 			
 			lang.getAnimation().setAnimation(lang.equals(languageManager.getCurrentLanguage()) ? 1.0F : 0.0F, 16);
 			
-			nvg.drawText(LegacyIcon.CHECK, this.getX() + this.getWidth() - 28, this.getY() + 12 + offsetY, ColorUtils.applyAlpha(currentColor.getInterpolateColor(), (int) (lang.getAnimation().getValue() * 255)), 16, Fonts.LEGACYICON);
+			nvg.drawText(LegacyIcon.CHECK, this.getX() + this.getWidth() - 28, this.getY() + 12 + offsetY, ColorUtils.applyAlpha(palette.getFontColor(ColorType.DARK).getRGB(), (int) (lang.getAnimation().getValue() * 255)), 16, Fonts.LEGACYICON);
 			
 			offsetY+=50;
 		}

@@ -284,6 +284,10 @@ public class HUDMod extends Mod {
 
 	public void drawCenteredText(String text, float addX, float addY, float size, Font font, Color color) {
 
+		if (font == Fonts.MOJANGLES) {
+			addY = addY - 1F;
+		}
+
 		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
 		float lastSize = size * scale;
 

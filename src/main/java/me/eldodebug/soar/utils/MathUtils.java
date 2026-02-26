@@ -28,6 +28,14 @@ public class MathUtils {
     public static int interpolateInt(int oldValue, int newValue, double interpolationValue){
         return interpolate(oldValue, newValue, (float) interpolationValue).intValue();
     }
+
+    public static int interpolateARGB(int start, int end, float progress) {
+        int a = interpolateInt((start >> 24) & 0xFF, (end >> 24) & 0xFF, progress);
+        int r = interpolateInt((start >> 16) & 0xFF, (end >> 16) & 0xFF, progress);
+        int g = interpolateInt((start >> 8) & 0xFF, (end >> 8) & 0xFF, progress);
+        int b = interpolateInt(start & 0xFF, end & 0xFF, progress);
+        return (a << 24) | (r << 16) | (g << 8) | b;
+    }
     
     public static boolean isInRange(float value, float min, float max) {
     	return value > min && value < max;
