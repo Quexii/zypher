@@ -72,7 +72,7 @@ public class LanguageSelectScene extends MainMenuScene {
 
 		Blur.drawBlur(x, y, width, height, 8);
 		nvg.drawRoundedRect(x, y, width, height, 8, this.getBackgroundColor());
-		nvg.drawCenteredText("Choose a Language", x + (width / 2), y + 10, Color.WHITE, 16, Fonts.MEDIUM);
+		nvg.drawCenteredText("Choose a Language", x + (width / 2), y + 14, Color.WHITE, 16, Fonts.MEDIUM);
 		nvg.drawRect(x, y + 27, width, 1, Color.WHITE);
 		
 		scroll.onScroll();
@@ -84,7 +84,7 @@ public class LanguageSelectScene extends MainMenuScene {
 
 		for(Language lang : Language.values()) {
 			nvg.drawRoundedImage(lang.getFlag(), x + offsetX + 14, y + 42, 90, 56, 4);
-			nvg.drawCenteredText(lang.getName(), x + offsetX + 14 + (90 / 2), y + 104, Color.WHITE, 7F, Fonts.REGULAR);
+			nvg.drawCenteredText(lang.getName(), x + offsetX + 14 + (90 / 2), y + 111, Color.WHITE, 7F, Fonts.REGULAR);
 			if(lang == currentLanguage) {
 				nvg.drawGradientOutlineRoundedRect(x + offsetX + 14, y + 42, 90, 56, 6, 2, currentColor.getColor1(), currentColor.getColor2());
 			}
@@ -97,7 +97,7 @@ public class LanguageSelectScene extends MainMenuScene {
 		nvg.restore();
 		
 		nvg.drawRoundedRect(x + width - 86, y + height - 26, 80, 20, 6, this.getBackgroundColor());
-		nvg.drawCenteredText("Next", x + width - 86 + (80 / 2), y + height - 20, Color.WHITE, 10, Fonts.REGULAR);
+		nvg.drawCenteredText("Next", x + width - 86 + (80 / 2), y + height - 15, Color.WHITE, 10, Fonts.REGULAR);
 	}
 
 	@Override

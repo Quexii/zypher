@@ -68,7 +68,7 @@ public class ThemeSelectScene extends MainMenuScene {
 
 		Blur.drawBlur(x, y, width, height, 8);
 		nvg.drawRoundedRect(x, y, width, height, 8, this.getBackgroundColor());
-		nvg.drawCenteredText("Choose a theme", x + (width / 2), y + 10, Color.WHITE, 16, Fonts.MEDIUM);
+		nvg.drawCenteredText("Choose a theme", x + (width / 2), y + 14, Color.WHITE, 16, Fonts.MEDIUM);
 		nvg.drawRect(x, y + 27, width, 1, Color.WHITE);
 		
 		scroll.onScroll();
@@ -87,7 +87,7 @@ public class ThemeSelectScene extends MainMenuScene {
 			nvg.setAlpha(t.getAnimation().getValue());
 			nvg.drawGradientOutlineRoundedRect(x + offsetX + 14, y + 42, 90, 56, 6, 1, currentColor.getColor1(), currentColor.getColor2());
 			nvg.restore();
-			nvg.drawCenteredText(t.getName(), x + offsetX + 14 + (90 / 2), y + 104, Color.WHITE, 9.5F, Fonts.REGULAR);
+			nvg.drawCenteredText(t.getName(), x + offsetX + 14 + (90 / 2), y + 109, Color.WHITE, 9.5F, Fonts.REGULAR);
 			
 			offsetX+=102;
 			index++;
@@ -98,7 +98,7 @@ public class ThemeSelectScene extends MainMenuScene {
 		nvg.restore();
 		
 		nvg.drawRoundedRect(x + width - 86, y + height - 26, 80, 20, 6, this.getBackgroundColor());
-		nvg.drawCenteredText("Next", x + width - 86 + (80 / 2), y + height - 20, Color.WHITE, 10, Fonts.REGULAR);
+		nvg.drawCenteredText("Next", x + width - 86 + (80 / 2), y + height - 15, Color.WHITE, 10, Fonts.REGULAR);
 	}
 	
 	private void drawModMenuExample(float x, float y, Theme theme) {
