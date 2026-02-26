@@ -1,5 +1,7 @@
 package me.eldodebug.soar.injection.mixin.mixins.render;
 
+import me.eldodebug.soar.injection.interfaces.IMixinRenderEntity;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,7 +31,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 
 @Mixin(RendererLivingEntity.class)
-public abstract class MixinRendererLivingEntity <T extends EntityLivingBase> extends Render<T> {
+public abstract class MixinRendererLivingEntity <T extends EntityLivingBase> extends Render<T> implements IMixinRenderEntity {
 
 	private float red;
 	private float green;
@@ -186,5 +188,10 @@ public abstract class MixinRendererLivingEntity <T extends EntityLivingBase> ext
 	@ModifyConstant(method = "setBrightness", constant = @Constant(floatValue = 0.3F, ordinal = 0))
 	public float setBrightnessAlpha(float original) {
 		return alpha;
+	}
+
+	@Override
+	public ResourceLocation entityTexture(Entity entity) {
+		return getEntityTexture((T) entity);
 	}
 }

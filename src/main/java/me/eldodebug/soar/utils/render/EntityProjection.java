@@ -33,6 +33,9 @@ public class EntityProjection {
     }
 
     public static EntityProjection getInstance() {
+        if (instance == null) {
+            instance = new EntityProjection();
+        }
         return instance;
     }
 

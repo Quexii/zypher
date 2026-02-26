@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import me.eldodebug.soar.injection.interfaces.IMixinMinecraft;
@@ -225,25 +226,36 @@ public class Render3DUtils {
         final float f2 = ((c >> 8) & 0xff) / 255F;
         final float f3 = (c & 0xff) / 255F;
 
-        GL11.glColor4f(f1, f2, f3, f);
-        GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+        Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
 
-        for (int i = 0; i <= 360 / quality; i++) {
-            final double x2 = Math.sin(((i * quality * Math.PI) / 180)) * r;
-            final double y2 = Math.cos(((i * quality * Math.PI) / 180)) * r;
-            GL11.glVertex2d(x + x2, y + y2);
-        }
+        float size = (float) r;
 
-        GL11.glEnd();
+        GlStateManager.disableLighting();
+        GlStateManager.enableBlend();
+        GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GlStateManager.disableCull();
+
+        GlStateManager.color(f1, f2, f3, f);
+        GlStateManager.translate(x, y, 0);
+
+        mc.getTextureManager().bindTexture(new ResourceLocation("soar/circle.png"));
+        worldrenderer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+        worldrenderer.pos(-size, -size, 0).tex(0,0).endVertex();
+        worldrenderer.pos(-size, size, 0).tex(0,1).endVertex();
+        worldrenderer.pos(size, size, 0).tex(1,1).endVertex();
+        worldrenderer.pos(size, -size, 0).tex(1,0).endVertex();
+        tessellator.draw();
+
+        GlStateManager.translate(-x, -y, 0);
+        GlStateManager.enableLighting();
+        GlStateManager.disableBlend();
+        GlStateManager.enableCull();
     }
     
     public static void renderBreadCrumbs(final List<Vec3> vec3s, Color color) {
 
         GlStateManager.disableDepth();
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
         int i = 0;
         try {
@@ -304,9 +316,6 @@ public class Render3DUtils {
         } catch (final ConcurrentModificationException ignored) {
         }
 
-        GL11.glDisable(GL11.GL_LINE_SMOOTH);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
         GlStateManager.enableDepth();
 
         GL11.glColor3d(255, 255, 255);

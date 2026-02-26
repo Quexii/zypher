@@ -37,6 +37,7 @@ import me.eldodebug.soar.utils.MathUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.system.MemoryStack;
 
 public class NanoVGManager {
 
@@ -295,14 +296,23 @@ public class NanoVGManager {
 
 	
 	public void drawShadow(float x, float y, float width, float height, float radius, int strength) {
-		
-		int alpha = 1;
-		
-		for(float f = strength; f > 0; f--) {
-			drawOutlineRoundedRect(x - (f / 2), y - (f / 2), width + f, height + f, radius + 2, f, new Color(0, 0, 0, alpha));
-
-			alpha+=2;
+		try (NVGPaint bg = NVGPaint.calloc()) {
+			NanoVG.nvgBoxGradient(nvg, x, y, width, height, radius, strength * 2, getColor(new Color(0, 0, 0, 50)), getColor(new Color(0, 0, 0, 0)), bg);
+			NanoVG.nvgBeginPath(nvg);
+			NanoVG.nvgRect(nvg, x - strength, y - strength, width + strength * 2, height + strength * 2);
+			NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
+			NanoVG.nvgPathWinding(nvg, NanoVG.NVG_HOLE);
+			NanoVG.nvgFillPaint(nvg, bg);
+			NanoVG.nvgFill(nvg);
 		}
+
+//		int alpha = 1;
+//
+//		for(float f = strength; f > 0; f--) {
+//			drawOutlineRoundedRect(x - (f / 2), y - (f / 2), width + f, height + f, radius + 2, f, new Color(0, 0, 0, alpha));
+//
+//			alpha+=2;
+//		}
 	}
 	
 	public void drawShadow(float x, float y, float width, float height, float radius) {
@@ -655,42 +665,42 @@ public class NanoVGManager {
 	public void drawRoundedImage(int texture, float x, float y, float width, float height, float radius) {
 		drawRoundedImage(texture, x, y, width, height, radius, 1.0F);
 	}
-	
+
 	public void drawPlayerHead(ResourceLocation location, float x, float y, float width, float height, float radius, float alpha) {
-		
-		if(location == null || mc.getTextureManager().getTexture(location) == null) {
+
+		if (location == null || mc.getTextureManager().getTexture(location) == null) {
 			return;
 		}
-		
+
 		int texture = mc.getTextureManager().getTexture(location).getGlTextureId();
-		
-		if(assetManager.loadImage(nvg, texture, width, height)) {
-			
+
+		if (assetManager.loadImage(nvg, texture, width, height)) {
+
 			int image = assetManager.getImage(texture);
-			
+
 			NanoVG.nvgImageSize(nvg, image, new int[]{(int) width}, new int[]{-(int) height});
-	        NVGPaint p = NVGPaint.calloc();
-	        
-	        float sizeMultiplier = 8;
-	        
-	        NanoVG.nvgImagePattern(nvg, x - width / 4 * sizeMultiplier / 2, y - height / 4 * sizeMultiplier / 2, width * sizeMultiplier, height * sizeMultiplier, 0, image, alpha, p);
-	        NanoVG.nvgBeginPath(nvg);
-	        NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
-	        NanoVG.nvgFillPaint(nvg, p);
-	        NanoVG.nvgFill(nvg);
-	        NanoVG.nvgClosePath(nvg);
-	        
-	        NanoVG.nvgImagePattern(nvg, x - width * 3.25F * sizeMultiplier / 2, y - height / 4 * sizeMultiplier / 2, width * sizeMultiplier, height * sizeMultiplier, 0, image, alpha, p);
-	        NanoVG.nvgBeginPath(nvg);
-	        NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
-	        NanoVG.nvgFillPaint(nvg, p);
-	        NanoVG.nvgFill(nvg);
-	        NanoVG.nvgClosePath(nvg);
-	        
-	        p.free();
+			NVGPaint p = NVGPaint.calloc();
+
+			float sizeMultiplier = 8;
+
+			NanoVG.nvgImagePattern(nvg, x - width / 4 * sizeMultiplier / 2, y - height / 4 * sizeMultiplier / 2, width * sizeMultiplier, height * sizeMultiplier, 0, image, alpha, p);
+			NanoVG.nvgBeginPath(nvg);
+			NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
+			NanoVG.nvgFillPaint(nvg, p);
+			NanoVG.nvgFill(nvg);
+			NanoVG.nvgClosePath(nvg);
+
+			NanoVG.nvgImagePattern(nvg, x - width * 3.25F * sizeMultiplier / 2, y - height / 4 * sizeMultiplier / 2, width * sizeMultiplier, height * sizeMultiplier, 0, image, alpha, p);
+			NanoVG.nvgBeginPath(nvg);
+			NanoVG.nvgRoundedRect(nvg, x, y, width, height, radius);
+			NanoVG.nvgFillPaint(nvg, p);
+			NanoVG.nvgFill(nvg);
+			NanoVG.nvgClosePath(nvg);
+
+			p.free();
 		}
 	}
-	
+
 	public void drawPlayerHead(ResourceLocation location, float x, float y, float width, float height, float radius) {
 		drawPlayerHead(location, x, y, width, height, radius, 1.0F);
 	}
