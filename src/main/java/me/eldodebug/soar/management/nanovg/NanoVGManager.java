@@ -367,7 +367,6 @@ public class NanoVGManager {
 	}
 
 	public void drawText(String text, float x, float y, Color color, float size, Font font) {
-
 		y+=size / 2;
 		
 		NanoVG.nvgBeginPath(nvg);
@@ -381,18 +380,39 @@ public class NanoVGManager {
 		NanoVG.nvgText(nvg, x, y, text);
 	}
 
+	public void drawBlurredText(String text, float x, float y, Color color, float blurRadius, float size, int align, Font font) {
+		y+=size / 2;
+
+		NanoVG.nvgBeginPath(nvg);
+		NanoVG.nvgFontBlur(nvg, blurRadius);
+		NanoVG.nvgFontSize(nvg, size);
+		NanoVG.nvgFontFace(nvg, font.getName());
+		NanoVG.nvgTextAlign(nvg, align);
+
+		NVGColor nvgColor = getColor(color);
+
+		NanoVG.nvgFillColor(nvg, nvgColor);
+		NanoVG.nvgText(nvg, x, y, text);
+		NanoVG.nvgFontBlur(nvg, 0f);
+	}
+
 	public void drawTextGlowing(String text, float x, float y, Color color, float blurRadius, float size, Font font) {
-		drawTextGlowingBg(text, x, y, color, size, blurRadius, font);
+		drawTextGlowingBg(text, x, y, color, size, blurRadius, NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_MIDDLE, font);
 		drawText(text, x,y, color, size, font);
 	}
 
-	private void drawTextGlowingBg(String text, float x, float y, Color color, float size, float blurRadius, Font font) {
+	public void drawCenteredTextGlowing(String text, float x, float y, Color color, float blurRadius, float size, Font font) {
+		drawTextGlowingBg(text, x, y, color, size, blurRadius, NanoVG.NVG_ALIGN_CENTER | NanoVG.NVG_ALIGN_MIDDLE, font);
+		drawCenteredText(text,x,y, color, size, font);
+	}
+
+	private void drawTextGlowingBg(String text, float x, float y, Color color, float size, float blurRadius, int align, Font font) {
 		y+=size / 2;
 
 		NanoVG.nvgBeginPath(nvg);
 		NanoVG.nvgFontSize(nvg, size);
 		NanoVG.nvgFontFace(nvg, font.getName());
-		NanoVG.nvgTextAlign(nvg, NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_MIDDLE);
+		NanoVG.nvgTextAlign(nvg, align);
 		NVGColor nvgColor = getColor(color);
 		NanoVG.nvgFillColor(nvg, nvgColor);
 		save();
@@ -420,10 +440,17 @@ public class NanoVGManager {
 
 	
 	public void drawCenteredText(String text, float x, float y, Color color, float size, Font font) {
-		
-		int textWidth = (int) getTextWidth(text, size, font);
-		
-		drawText(text, x - (textWidth >> 1), y, color, size, font);
+		y+=size / 2;
+
+		NanoVG.nvgBeginPath(nvg);
+		NanoVG.nvgFontSize(nvg, size);
+		NanoVG.nvgFontFace(nvg, font.getName());
+		NanoVG.nvgTextAlign(nvg, NanoVG.NVG_ALIGN_CENTER | NanoVG.NVG_ALIGN_MIDDLE);
+
+		NVGColor nvgColor = getColor(color);
+
+		NanoVG.nvgFillColor(nvg, nvgColor);
+		NanoVG.nvgText(nvg, x, y, text);
 	}
 	
 	public float getTextWidth(String text, float size, Font font) {

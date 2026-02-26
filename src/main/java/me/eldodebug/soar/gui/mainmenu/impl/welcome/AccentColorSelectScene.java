@@ -2,6 +2,7 @@ package me.eldodebug.soar.gui.mainmenu.impl.welcome;
 
 import java.awt.Color;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
@@ -72,7 +73,8 @@ public class AccentColorSelectScene extends MainMenuScene {
 		int offsetX = 0;
 		int offsetY = 0;
 		int index = 1;
-		
+
+		Blur.drawBlur(x, y, width, height, 8);
 		nvg.drawRoundedRect(x, y, width, height, 8, this.getBackgroundColor());
 		nvg.drawCenteredText("Choose a accent color", x + (width / 2), y + 10, Color.WHITE, 16, Fonts.MEDIUM);
 		nvg.drawRect(x, y + 27, width, 1, Color.WHITE);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.gui.mainmenu.impl.DiscontinuedSoar8;
 import me.eldodebug.soar.gui.mainmenu.impl.UpdateScene;
 import me.eldodebug.soar.gui.mainmenu.impl.welcome.*;
@@ -27,6 +28,7 @@ import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 import me.eldodebug.soar.utils.mouse.MouseUtils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.nanovg.NanoVG;
 
 public class GuiGlideMainMenu extends GuiScreen {
 
@@ -89,7 +91,25 @@ public class GuiGlideMainMenu extends GuiScreen {
 		
 		backgroundAnimations[0].setAnimation(Mouse.getX(), 16);
 		backgroundAnimations[1].setAnimation(Mouse.getY(), 16);
-		
+
+		nvg.setupAndDraw(() -> {
+			Background currentBackground = instance.getProfileManager().getBackgroundManager().getCurrentBackground();
+
+			if(currentBackground instanceof DefaultBackground) {
+
+				DefaultBackground bg = (DefaultBackground) currentBackground;
+
+				nvg.drawImage(bg.getImage(), -21 + backgroundAnimations[0].getValue() / 90, backgroundAnimations[1].getValue() * -1 / 90, sr.getScaledWidth() + 21, sr.getScaledHeight() + 20);
+			}else if(currentBackground instanceof CustomBackground) {
+
+				CustomBackground bg = (CustomBackground) currentBackground;
+
+				nvg.drawImage(bg.getImage(), -21 + backgroundAnimations[0].getValue() / 90, backgroundAnimations[1].getValue() * -1 / 90, sr.getScaledWidth() + 21, sr.getScaledHeight() + 20);
+			}
+		});
+
+		Blur.render(5f);
+
 		nvg.setupAndDraw(() -> {
 			
 			drawNanoVG(sr, instance, nvg);
@@ -121,35 +141,25 @@ public class GuiGlideMainMenu extends GuiScreen {
 	private void drawNanoVG(ScaledResolution sr, Glide instance, NanoVGManager nvg) {
 		
 		String copyright = "Copyright Mojang AB. Do not distribute!";
-		Background currentBackground = instance.getProfileManager().getBackgroundManager().getCurrentBackground();
-		
-		if(currentBackground instanceof DefaultBackground) {
-			
-			DefaultBackground bg = (DefaultBackground) currentBackground;
-			
-			nvg.drawImage(bg.getImage(), -21 + backgroundAnimations[0].getValue() / 90, backgroundAnimations[1].getValue() * -1 / 90, sr.getScaledWidth() + 21, sr.getScaledHeight() + 20);
-		}else if(currentBackground instanceof CustomBackground) {
-			
-			CustomBackground bg = (CustomBackground) currentBackground;
-			
-			nvg.drawImage(bg.getImage(), -21 + backgroundAnimations[0].getValue() / 90, backgroundAnimations[1].getValue() * -1 / 90, sr.getScaledWidth() + 21, sr.getScaledHeight() + 20);
-		}
-
-		nvg.drawText(copyright, sr.getScaledWidth() - (nvg.getTextWidth(copyright, 9, Fonts.REGULAR)) - 4, sr.getScaledHeight() - 12, new Color(255, 255, 255), 9, Fonts.REGULAR);
-		nvg.drawText("Glide Client v" + instance.getVersion(), 4, sr.getScaledHeight() - 12, new Color(255, 255, 255), 9, Fonts.REGULAR);
+		nvg.drawBlurredText(copyright, sr.getScaledWidth() - (nvg.getTextWidth(copyright, 9, Fonts.REGULAR)) - 4, sr.getScaledHeight() - 12, Color.BLACK, 4f, 9, NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_MIDDLE, Fonts.REGULAR);
+		nvg.drawText(copyright, sr.getScaledWidth() - (nvg.getTextWidth(copyright, 9, Fonts.REGULAR)) - 4, sr.getScaledHeight() - 12, Color.WHITE, 9, Fonts.REGULAR);
+		nvg.drawBlurredText("Glide Client v" + instance.getVersion(), 4, sr.getScaledHeight() - 12, Color.BLACK, 4f, 9, NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_MIDDLE, Fonts.REGULAR);
+		nvg.drawText("Glide Client v" + instance.getVersion(), 4, sr.getScaledHeight() - 12, Color.WHITE, 9, Fonts.REGULAR);
 	}
 	
 	private void drawButtons(int mouseX, int mouseY, ScaledResolution sr, NanoVGManager nvg) {
 		
 		closeFocusAnimation.setAnimation(MouseUtils.isInside(mouseX, mouseY, sr.getScaledWidth() - 28, 6, 22, 22) ? 1.0F : 0.0F, 16);
-		
+
+		Blur.drawBlur(sr.getScaledWidth() - 28, 6, 22, 22, 4);
 		nvg.drawRoundedRect(sr.getScaledWidth() - 28, 6, 22, 22, 4, this.getBackgroundColor());
-		nvg.drawCenteredText(LegacyIcon.X, sr.getScaledWidth() - 19F, 8F, new Color(255, 255 - (int) (closeFocusAnimation.getValue() * 200), 255 - (int) (closeFocusAnimation.getValue() * 200)), 18, Fonts.LEGACYICON);
-		
+		nvg.drawCenteredText(LegacyIcon.X, sr.getScaledWidth() - 17.5F, 8F, new Color(255, 255 - (int) (closeFocusAnimation.getValue() * 200), 255 - (int) (closeFocusAnimation.getValue() * 200)), 18, Fonts.LEGACYICON);
+
 		backgroundSelectFocusAnimation.setAnimation(MouseUtils.isInside(mouseX, mouseY, sr.getScaledWidth() - 28 - 28, 6, 22, 22) ? 1.0F : 0.0F, 16);
-		
+
+		Blur.drawBlur(sr.getScaledWidth() - 28 - 28, 6, 22, 22, 4);
 		nvg.drawRoundedRect(sr.getScaledWidth() - 28 - 28, 6, 22, 22, 4, this.getBackgroundColor());
-		nvg.drawCenteredText(LegacyIcon.IMAGE, sr.getScaledWidth() - 19F - 26.5F, 9.5F, new Color(255 - (int) (backgroundSelectFocusAnimation.getValue() * 200), 255, 255 - (int) (backgroundSelectFocusAnimation.getValue() * 200)), 15, Fonts.LEGACYICON);
+		nvg.drawCenteredText(LegacyIcon.IMAGE, sr.getScaledWidth() - 19F - 26F, 9.5F, new Color(255 - (int) (backgroundSelectFocusAnimation.getValue() * 200), 255, 255 - (int) (backgroundSelectFocusAnimation.getValue() * 200)), 15, Fonts.LEGACYICON);
 	}
 	
 	private void drawSplashScreen(ScaledResolution sr, NanoVGManager nvg) {

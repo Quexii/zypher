@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
 import me.eldodebug.soar.utils.animation.normal.easing.EaseInOutCirc;
@@ -70,6 +71,7 @@ public class BackgroundScene extends MainMenuScene {
 		scroll.onScroll();
 		scroll.onAnimation();
 
+		Blur.drawBlur(acX, acY, acWidth, acHeight, 8f);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 8, this.getBackgroundColor());
 		nvg.drawCenteredText(TranslateText.SELECT_BACKGROUND.getText(), acX + (acWidth / 2), acY + 8, Color.WHITE, 14, Fonts.SEMIBOLD);
 

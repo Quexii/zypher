@@ -1,5 +1,6 @@
 package me.eldodebug.soar.gui;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.nanovg.NanoVGManager;
@@ -46,6 +47,8 @@ public class GuiGameMenu extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         BlurUtils.drawBlurScreen(20);
         NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+        Gui.drawRect(0, 0, mc.displayWidth, mc.displayHeight, 0x8C000000);
+        Blur.render(10f);
         screenAnimation.wrap(() -> drawNanoVG(nvg), x, y, width, height, 2 - introAnimation.getValueFloat(), Math.min(introAnimation.getValueFloat(), 1), false);
         if(introAnimation.isDone(Direction.BACKWARDS)) {
                this.mc.displayGuiScreen(null);
@@ -55,7 +58,6 @@ public class GuiGameMenu extends GuiScreen {
     }
 
     private void drawNanoVG(NanoVGManager nvg) {
-        nvg.drawRect(-5, -5, scaledWidth + 10, scaledHeight + 10,  new Color(0,0,0, 140));
         nvg.drawText(LegacyIcon.ARROW_LEFT, x, y + 5, new Color(255,255,255, 140),11, Fonts.LEGACYICON);
         nvg.drawCenteredText( I18n.format("menu.game"), centre, y + 5,  new Color(255,255,255, 200), 13, Fonts.SEMIBOLD);
 
@@ -79,6 +81,7 @@ public class GuiGameMenu extends GuiScreen {
     }
 
     private void drawButton(NanoVGManager nvg, String s, String i, Float offset){
+        Blur.drawBlur(x, y + offset, width , 22, 6);
         nvg.drawRoundedRect(x, y + offset, width , 22, 6, new Color(230, 230, 230, 80));
         float startX = (nvg.getTextWidth(s, 9.5F, Fonts.MEDIUM) + 14) /2;
         nvg.drawText(i, centre - startX, y + offset + 6.5F, Color.WHITE, 9.5F, Fonts.LEGACYICON);
