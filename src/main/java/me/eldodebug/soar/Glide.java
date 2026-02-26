@@ -127,9 +127,9 @@ public class Glide {
 	}
 	
 	public void stop() {
+		nanoVGManager.destroy();
 		profileManager.save();
 		Sound.play("soar/audio/close.wav", true);
-
 	}
 	
 	private void removeOptifineZoom() {

@@ -26,14 +26,7 @@ public class VBO {
         GL15.glDeleteBuffers(vid);
     }
 
-    public void data(float[] data) {
-        ByteBuffer bb = ByteBuffer.allocateDirect(data.length * 4);
-        bb.order(ByteOrder.nativeOrder());
-
-        FloatBuffer buffer = bb.asFloatBuffer();
-        buffer.put(data);
-        buffer.flip();
-
+    public void data(FloatBuffer buffer) {
         bind();
         GL15.glBufferData(GL15.GL_ARRAY_BUFFER, buffer, GL15.GL_STATIC_DRAW);
         unbind();
