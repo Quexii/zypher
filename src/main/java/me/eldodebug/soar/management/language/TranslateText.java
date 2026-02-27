@@ -100,7 +100,7 @@ public enum TranslateText {
 	FPS_SPOOFER("text.fpsspoofer.name"), FPS_SPOOFER_DESCRIPTION("text.fpsspoorer.description"), MULTIPLIER("text.multiplier"),
 	HORSE_STATS("text.horsestats.name"), HORSE_STATS_DESCRIPTION("text.horsestats.description"), KILL_EFFECTS("text.killeffects.name"),
 	KILL_EFFECTS_DESCRIPTION("text.killeffects.description"), BLOOD("text.blood"), LIGHTING("text.lighting"), FLAMES("text.flames"),
-	CLOUD("text.cloud"), SOUND("text.sound"), EFFECT("text.effect"), NAMETAG("text.nametag.name"), NAMETAG_DESCRIPTION("text.nametag.description"),
+	CLOUD("text.cloud"), PHYSICS("text.physics"), SOUND("text.sound"), EFFECT("text.effect"), NAMETAG("text.nametag.name"), NAMETAG_DESCRIPTION("text.nametag.description"),
 	MUSIC_INFO("text.musicinfo.name"), MUSIC_INFO_DESCRIPTION("text.musicinfo.description"), OVERLAY("text.overlay"), WAVEFORM("text.waveform"),
 	APPEARANCE("text.appearance"), APPEARANCE_DESCRIPTION("text.appearance.description"), LANGUAGE_DESCRIPTION("text.language.description"),
 	KEYBINDS("text.keybinds"), KEYBINDS_DESCRIPTION("text.keybinds.description"), ACCENT_COLOR("text.accentcolor"), HUD_THEME("text.hudtheme"),
@@ -116,7 +116,7 @@ public enum TranslateText {
 	SLIME("text.slime"), SPARK("text.spark"), SWIRL("text.swirl"), WHITE_SMOKE("text.whitesmoke"), SKIN_PROTECT("text.skinprotect.name"),
 	SKIN_PROTECT_DESCRIPTION("text.skinprotect.description"), HYPIXEL_QUICK_PLAY("text.hypixelquickplay.name"), HYPIXEL_QUICK_PLAY_DESCRIPTION("text.hypixelquickplay.description"),
 	REARVIEW("text.rearview.name"), REARVIEW_DESCRIPTION("text.rearview.description"), LOCK_CAMERA("text.lockcamera"), SOUND_MODIFIER("text.soundmodifier.name"),
-	SOUND_MODIFIER_DESCRIPTION("text.soundmodifier.description"), TNT("text.tnt"), NOTE("text.note"), PORTAL("text.portal"), MOBS("text.mobs"), STEP("text.step"),
+	SOUND_MODIFIER_DESCRIPTION("text.soundmodifier.description"), TNT("text.tnt"), NOTE("text.note"), PORTAL("text.portal"), MOBS("text.mobs"), PLAYERS("text.players"), ANIMALS("text.animals"), STEP("text.step"),
 	RECORDS("text.records"), FIREWORKS("text.fireworks"), PARTICLE_CUSTOMIZER("text.particlecustomizer.name"), PARTICLE_CUSTOMIZER_DESCRIPTION("text.particlecustomizer.description"),
 	ALWAYS_SHARPNESS("text.alwayssharpness"), ALWAYS_CRITICALS("text.alwayscriticals"), SHARPNESS("text.sharpness"), CRITICALS("text.criticals"),
 	SHARPNESS_AMOUNT("text.sharpnessmamount"), CRITICALS_AMOUNT("text.criticalsamount"), BLOOD_PARTICLES("text.bloodparticles.name"),BLOOD_PARTICLES_DESCRIPTION("text.bloodparticles.description"),
@@ -148,7 +148,8 @@ public enum TranslateText {
 	SEARCH_FAILED("text.search_failed"), SPOTIFY_AUTH_MANUAL_REQUIRED("Please authorize in the browser and then click 'Complete Authorization'"), SPOTIFY_AUTH_SUCCESS("Authorization completed successfully"), SPOTIFY_AUTH_TOKEN_RECEIVED("text.spotify.auth.token_received"),
 	SPOTIFY_NO_ACTIVE_DEVICE("text.spotify.no_active_device"), SPOTIFY_PLAYBACK_STARTED("text.spotify.playback.started"), SPOTIFY_FAIL_BROWSER("text.spotify.fail_browser"), SPOTIFY_CONNECT("text.spotify.connect"), AUTO_GL("text.autogl"), AUTO_GL_DELAY("text.autogldelay"),
 	UI_SOUNDS("text.ui.sounds"), UI_SOUNDS_DESCRIPTION("text.ui.sounds.description") ,EXIT_WORLD_SINGLEPLAYER("text.gamemenu.exitworldsingleplayer"), OPEN_MOD_MENU("text.gamemenu.openglidemenu"), EDIT_HUD("text.gamemenu.edithud"), GRADIENT_SIMPLE("text.gradientsimple"), GENERAL("text.general"),  GENERAL_DESCRIPTION("text.general.description"),
-	UI_BLUR("text.ui.blur"), BLUR_STRENGTH("text.blur.strength"), MC_FONT("text.hud.mcfont"), CHANGELOG("text.changelog"), NEWS("text.news"), SEARCH("text.search");
+	UI_BLUR("text.ui.blur"), BLUR_STRENGTH("text.blur.strength"), MC_FONT("text.hud.mcfont"), CHANGELOG("text.changelog"), NEWS("text.news"), SEARCH("text.search"), NO_INVIS_NAME("text.noinvis.name"), NO_INVIS_DESCRIPTION("text.noinvis.description"), NO_INVIS_COLOR("text.noinvis.color"),
+		ESP_NAME("text.esp.name"), ESP_DESCRIPTION("text.esp.description"), SUPERHEROFX_NAME("text.superherofx.name"), SUPERHEROFX_DESCRIPTION("text.superherofx.description");
 
 	private String key, text;
 

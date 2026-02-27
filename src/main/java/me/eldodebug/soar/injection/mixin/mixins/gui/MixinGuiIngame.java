@@ -1,6 +1,7 @@
 package me.eldodebug.soar.injection.mixin.mixins.gui;
 
 import eu.shoroa.contrib.render.Blur;
+import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiEditHUD;
 import me.eldodebug.soar.gui.modmenu.GuiModMenu;
 import me.eldodebug.soar.injection.interfaces.IMixinGuiIngame;
@@ -72,14 +73,14 @@ public abstract class MixinGuiIngame implements IMixinGuiIngame {
 	}
 
 	@Inject(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V", shift = At.Shift.BEFORE, ordinal = 2))
-    public void postRenderGameOverlay(float partialTicks, CallbackInfo ci) {
+	public void postRenderGameOverlay(float partialTicks, CallbackInfo ci) {
 		Blur.render();
 
 		new EventRenderDamageTint(partialTicks).call();
-		
+
 		if(!(mc.currentScreen instanceof GuiEditHUD)) {
 			new EventRender2D(partialTicks).call();
-			
+
 			if(!(mc.currentScreen instanceof GuiModMenu)) {
 				new EventRenderNotification().call();
 			}
@@ -126,16 +127,20 @@ public abstract class MixinGuiIngame implements IMixinGuiIngame {
         }
     }
     
-    @Inject(method = "renderPlayerStats", at = @At("TAIL"))
+    @Inject(method = "renderPlayerStats", at = @At("TAIL"), cancellable = true)
     public void postRenderPlayerStats(ScaledResolution scaledRes, CallbackInfo ci) {
-    	
+		EventRenderPlayerStats event = new EventRenderPlayerStats();
     	if(mc.getRenderViewEntity() instanceof EntityPlayer) {
     		
         	EntityPlayer entityplayer = (EntityPlayer) mc.getRenderViewEntity();
         	Entity entity = entityplayer.ridingEntity;
         	
         	if(entity == null) {
-        		new EventRenderPlayerStats().call();
+        		event.call();
+
+				if(event.isCancelled()) {
+					ci.cancel();
+				}
         	}
     	}
     }

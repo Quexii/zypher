@@ -33,6 +33,7 @@ import me.eldodebug.soar.management.screenshot.ScreenshotManager;
 import me.eldodebug.soar.management.security.SecurityFeatureManager;
 import me.eldodebug.soar.management.waypoint.WaypointManager;
 import me.eldodebug.soar.utils.OptifineUtils;
+import me.eldodebug.soar.utils.render.EntityProjection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
@@ -93,6 +94,8 @@ public class Glide {
 		languageManager = new LanguageManager();
 		eventManager = new EventManager();
 		modManager = new ModManager();
+		
+		new EntityProjection();
 		
 		modManager.init();
 		

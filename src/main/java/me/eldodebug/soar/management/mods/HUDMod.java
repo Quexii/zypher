@@ -17,6 +17,7 @@ import me.eldodebug.soar.management.nanovg.font.Font;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.ColorUtils;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.nanovg.NanoVG;
 
 public class HUDMod extends Mod {
 
@@ -87,6 +88,7 @@ public class HUDMod extends Mod {
 		NanoVGManager nvg = instance.getNanoVGManager();
 
 		nvg.drawPlayerHead(location, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
+		nvg.drawOutlineRoundedRect(x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale, 0.7F, getFontColor(80));
 	}
 
 	public void drawRoundedImage(int texture, float addX, float addY, float width, float height, float radius) {
@@ -233,7 +235,7 @@ public class HUDMod extends Mod {
 		}
 		if(isModern) {
 			nvg.drawRoundedRect(x, y, lastWidth, lastHeight, radius, new Color(0, 0, 0, 110));
-			nvg.drawOutlineRoundedRect(x - 0.5F, y - 0.5F, lastWidth + 1, lastHeight + 1, radius + 0.5F, 0.7F,  new Color(255,255,255,110));
+			nvg.drawOutlineRoundedRect(x - 0.25f, y - 0.25f, lastWidth + 0.5f, lastHeight + 0.5f, radius + 0.5f, 0.7F,  new Color(255,255,255,50));
 		}
 
 	}

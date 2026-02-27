@@ -73,6 +73,7 @@
     "network.MixinS14PacketEntity",
     "network.MixinS3FPacketCustomPayload",
     "optifine.MixinLightMap",
+    "render.MixinActiveRenderInfo",
     "render.MixinAmbientOcclusionFace",
     "render.MixinBlockModelRenderer",
     "render.MixinEntityRenderer",

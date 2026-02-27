@@ -10,13 +10,19 @@ public class EventRendererLivingEntity extends Event {
 	private RendererLivingEntity<EntityLivingBase> renderer;
 	private Entity entity;
 	private double x, y, z;
-	
-	public EventRendererLivingEntity(RendererLivingEntity<EntityLivingBase> renderer, Entity entity, double x, double y, double z) {
+	private float limbSwing, limbSwingAmount, partialTicks, renderYawOffset, scaleFactor;
+
+	public EventRendererLivingEntity(RendererLivingEntity<EntityLivingBase> renderer, Entity entity, double x, double y, double z, float limbSwing, float limbSwingAmount, float partialTicks, float renderYawOffset, float scaleFactor) {
 		this.renderer = renderer;
 		this.entity = entity;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.limbSwing = limbSwing;
+		this.limbSwingAmount = limbSwingAmount;
+		this.partialTicks = partialTicks;
+		this.renderYawOffset = renderYawOffset;
+		this.scaleFactor = scaleFactor;
 	}
 
 	public RendererLivingEntity<EntityLivingBase> getRenderer() {
@@ -37,5 +43,25 @@ public class EventRendererLivingEntity extends Event {
 
 	public double getZ() {
 		return z;
+	}
+
+	public float getLimbSwing() {
+		return limbSwing;
+	}
+
+	public float getLimbSwingAmount() {
+		return limbSwingAmount;
+	}
+
+	public float getPartialTicks() {
+		return partialTicks;
+	}
+
+	public float getRenderYawOffset() {
+		return renderYawOffset;
+	}
+
+	public float getScaleFactor() {
+		return scaleFactor;
 	}
 }

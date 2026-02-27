@@ -26,7 +26,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'java'
 
 version = "Release"
-group= "me.eldodebug"
+group = "me.eldodebug"
 archivesBaseName = "GlideClient"
 
 sourceCompatibility = targetCompatibility = 1.8
@@ -38,6 +38,9 @@ minecraft {
     runDir = "run"
     mappings = "stable_22"
     clientJvmArgs = ["-XX:-DisableExplicitGC"]
+    clientRunArgs = getClientRunArgs() + [
+            "--username", "Quexii"
+    ]
     makeObfSourceJar = false
 }
 

@@ -28,7 +28,7 @@ public class AssetManager {
 	private HashMap<String, NVGAsset> svgCache = new HashMap<String, NVGAsset>();
 
 	public boolean loadImage(long nvg, int texture, float width, float height) {
-		return loadImage(glTextureCache.get(texture), texture, width, height, 0);
+        return loadImage(nvg, texture, width, height, 0);
 	}
 
 	public boolean loadImage(long nvg, int texture, float width, float height, int flags) {
@@ -45,7 +45,7 @@ public class AssetManager {
 	public boolean loadImage(long nvg, ResourceLocation location) {
 		
 		if(!imageCache.containsKey(location.getResourcePath())) {
-			
+
 			int[] width = {0};
 			int[] height = {0};
 			int[] channels = {0};

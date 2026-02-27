@@ -1,5 +1,6 @@
 package me.eldodebug.soar.injection.mixin.mixins.world;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Final;
@@ -51,7 +52,11 @@ public abstract class MixinWorld implements IMixinWorld {
 	
 	@Shadow
 	protected abstract boolean isChunkLoaded(int x, int z, boolean allowEmpty);
-	
+
+    @Shadow
+    @Final
+    public List<Entity> loadedEntityList;
+
     @Inject(method = "getRainStrength", at = @At("HEAD"), cancellable = true)
     public void preGetRainStrength(float delta, CallbackInfoReturnable<Float> cir) {
     	
@@ -132,4 +137,8 @@ public abstract class MixinWorld implements IMixinWorld {
         return EnumFacings.FACINGS;
     }
 
+    @Override
+    public List<Entity> getLoadedEntityList() {
+        return loadedEntityList;
+    }
 }

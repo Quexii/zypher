@@ -23,6 +23,8 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Blur {
     private static final UIShader shader = new UIShader("soar/shaders/vertex.vert", "soar/shaders/blur.frag");
@@ -32,7 +34,7 @@ public class Blur {
     private static Framebuffer fboEighth = new Framebuffer(Minecraft.getMinecraft().displayWidth / 8, Minecraft.getMinecraft().displayHeight / 8, false);
 
     private static final Minecraft mc = Minecraft.getMinecraft();
-    private static int nvgImage = -1;
+    private static Map<Integer, Integer> nvgImages = new HashMap<>();
 
     public static void init() {
         try {
@@ -47,6 +49,8 @@ public class Blur {
     private static void createFbos() {
         int w = mc.displayWidth;
         int h = mc.displayHeight;
+
+        nvgImages.clear();
 
         fboHalf.deleteFramebuffer();
         fboHalf = new Framebuffer(w / 2, h / 2, false);
@@ -83,8 +87,12 @@ public class Blur {
     }
 
     public static void render() {
-        if (nvgImage == -1) {
-            nvgImage = nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight);
+        render(mc.getFramebuffer().framebufferTexture);
+    }
+
+    public static int render(int sourceTexture) {
+        if (!nvgImages.containsKey(sourceTexture)) {
+            nvgImages.put(sourceTexture, nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight));
         }
 
         float settingStrength = InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat();
@@ -97,7 +105,7 @@ public class Blur {
         fboHalf.framebufferClear();
         fboHalf.bindFramebuffer(true);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        mc.getFramebuffer().bindFramebufferTexture();
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, sourceTexture);
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth, mc.displayHeight));
@@ -151,9 +159,17 @@ public class Blur {
 
         mc.getFramebuffer().bindFramebuffer(true);
         GL11.glPopAttrib();
+
+        return nvgImages.get(sourceTexture);
     }
 
     public static void drawBlur(float x, float y, float w, float h, float radius) {
+        if(nvgImages.containsKey(mc.getFramebuffer().framebufferTexture)) {
+            drawBlur(nvgImages.get(mc.getFramebuffer().framebufferTexture), x, y, w, h, radius);
+        }
+    }
+
+    public static void drawBlur(int nvgImage, float x, float y, float w, float h, float radius) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
@@ -179,6 +195,12 @@ public class Blur {
     }
 
     public static void drawBlur(Runnable r) {
+        if(nvgImages.containsKey(mc.getFramebuffer().framebufferTexture)) {
+            drawBlur(nvgImages.get(mc.getFramebuffer().framebufferTexture), r);
+        }
+    }
+
+    public static void drawBlur(int nvgImage, Runnable r) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
