@@ -2,6 +2,8 @@ package me.eldodebug.soar.utils.animation.normal;
 
 import me.eldodebug.soar.utils.TimerUtils;
 
+import java.util.function.Supplier;
+
 public abstract class Animation {
 
     public TimerUtils timer = new TimerUtils();
@@ -11,6 +13,7 @@ public abstract class Animation {
     protected double endPoint;
 
     protected Direction direction;
+    private Supplier<Direction> directionSupplier = null;
 
     public Animation(int ms, double endPoint) {
         this.duration = ms;
@@ -56,6 +59,10 @@ public abstract class Animation {
     }
 
     public double getValue() {
+        if (directionSupplier != null) {
+            setDirection(directionSupplier.get());
+        }
+
         if (direction == Direction.FORWARDS) {
             if (isDone())
                 return endPoint;
@@ -103,4 +110,9 @@ public abstract class Animation {
 	public Direction getDirection() {
 		return direction;
 	}
+
+    public Animation directionBy(Supplier<Direction> directionSupplier) {
+        this.directionSupplier = directionSupplier;
+        return this;
+    }
 }

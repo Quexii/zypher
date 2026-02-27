@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
 import me.eldodebug.soar.utils.animation.normal.easing.EaseInOutCirc;
@@ -70,8 +71,9 @@ public class BackgroundScene extends MainMenuScene {
 		scroll.onScroll();
 		scroll.onAnimation();
 
+		Blur.drawBlur(acX, acY, acWidth, acHeight, 8f);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 8, this.getBackgroundColor());
-		nvg.drawCenteredText(TranslateText.SELECT_BACKGROUND.getText(), acX + (acWidth / 2), acY + 8, Color.WHITE, 14, Fonts.SEMIBOLD);
+		nvg.drawCenteredText(TranslateText.SELECT_BACKGROUND.getText(), acX + (acWidth / 2), acY + 15, Color.WHITE, 14, Fonts.SEMIBOLD);
 
 		nvg.save();
 		nvg.scissor(acX, acY + 25, acWidth, acHeight - 25);
@@ -102,7 +104,7 @@ public class BackgroundScene extends MainMenuScene {
 
 				if(bg.getId() == 999) {
 					nvg.drawRoundedRect(acX + 11 + offsetX, acY + 35 + offsetY, 102.5F, 57.5F, 6, Color.BLACK);
-					nvg.drawCenteredText(LegacyIcon.PLUS, acX + 10 + offsetX + (102.5F / 2), acY + 42.5F + offsetY, Color.WHITE, 26, Fonts.LEGACYICON);
+					nvg.drawCenteredText(LegacyIcon.PLUS, acX + 10 + offsetX + (102.5F / 2), acY + 42.5F + offsetY + 13, Color.WHITE, 26, Fonts.LEGACYICON);
 				} else {
 					nvg.drawRoundedImage(defBackground.getImage(), acX + 11 + offsetX, acY + 35 + offsetY, 102.5F, 57.5F, 6);
 				}
@@ -118,7 +120,7 @@ public class BackgroundScene extends MainMenuScene {
 			}
 
 			nvg.drawRoundedRectVarying(acX + offsetX + 11, acY + offsetY + 76.5F, 102.5F, 16, 0, 0, 6, 6, this.getBackgroundColor());
-			nvg.drawCenteredText(bg.getName(), acX + offsetX + 11 + (102.5F / 2), acY + offsetY + 80, Color.WHITE, 10, Fonts.REGULAR);
+			nvg.drawCenteredText(bg.getName(), acX + offsetX + 11 + (102.5F / 2), acY + offsetY + 85, Color.WHITE, 10, Fonts.REGULAR);
 
 			offsetX+=115;
 

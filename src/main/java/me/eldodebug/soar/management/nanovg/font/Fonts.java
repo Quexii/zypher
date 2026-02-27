@@ -21,6 +21,7 @@ public class Fonts {
 	public static final Font UNIFONT = new Font("unifont", new ResourceLocation(PATH + "unifont/unifont.otf"));
 	public static final Font BANGERS = new Font("bangers", new ResourceLocation(PATH + "Bangers.ttf"));
 
+
 	public static ArrayList<Font> getFonts() {
 		return new ArrayList<Font>(Arrays.asList(MEDIUM, SEMIBOLD, REGULAR, LEGACYICON, MOJANGLES));
 	}

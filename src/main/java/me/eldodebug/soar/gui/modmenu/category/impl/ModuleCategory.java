@@ -518,7 +518,7 @@ public class ModuleCategory extends Category {
 			}
 		}
 
-		if(openSetting && mouseButton == 3) {
+		if(openSetting && mouseButton == 3 || mouseButton == 1) {
 			openSetting = false;
 		}
 	}

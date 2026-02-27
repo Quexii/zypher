@@ -68,7 +68,7 @@ public class CalendarMod extends HUDMod {
 				this.drawRoundedRect(4.5F + offsetX, 30.5F + offsetY, 10F, 10F, 10F / 2);
 			}
 			
-			this.drawCenteredText(String.valueOf(i), 10 + offsetX, 33 + offsetY, 6, getHudFont(1), i == day ? currentColor.getInterpolateColor() : this.getFontColor());
+			this.drawCenteredText(String.valueOf(i), 10 + offsetX, 33 + offsetY + 3, 6, getHudFont(1), i == day ? currentColor.getInterpolateColor() : this.getFontColor());
 			
 			offsetX+=13.4;
 			

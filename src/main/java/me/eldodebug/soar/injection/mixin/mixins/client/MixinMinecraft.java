@@ -1,5 +1,6 @@
 package me.eldodebug.soar.injection.mixin.mixins.client;
 
+import eu.shoroa.contrib.animation.Animate;
 import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiSplashScreen;
@@ -31,6 +32,7 @@ import net.minecraft.util.Session;
 import net.minecraft.util.Timer;
 import net.minecraft.util.Util;
 import org.apache.commons.lang3.SystemUtils;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -343,6 +345,25 @@ public abstract class MixinMinecraft implements IMixinMinecraft {
     
     @Redirect(method = "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V", at = @At(value = "INVOKE", target = "Ljava/lang/System;gc()V"))
     private void optimizedWorldSwapping() {}
+
+	long lastFrame = getCurrentTime();
+
+	private long getCurrentTime() {
+		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
+	}
+
+	@Inject(method = "runGameLoop", at = @At(value = "INVOKE", target = "Ljava/lang/System;nanoTime()J"))
+	private void setDelta(CallbackInfo ci) {
+		long currentTime = getCurrentTime();
+		long deltaTimeMillis = currentTime - lastFrame;
+		lastFrame = currentTime;
+
+		float deltaTimeSeconds = deltaTimeMillis / 1000.0f;
+
+		if (deltaTimeSeconds > 0 && deltaTimeSeconds < 0.1f) {
+			Animate.DELTA = deltaTimeSeconds;
+		}
+	}
     
     @Redirect(method = "runGameLoop", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/stream/IStream;func_152935_j()V"))
     private void skipTwitchCode1(IStream instance) {}

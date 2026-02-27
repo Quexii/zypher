@@ -12,6 +12,7 @@ import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
+import me.eldodebug.soar.types.Rect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.shader.Framebuffer;
@@ -23,8 +24,6 @@ import org.lwjgl.opengl.GL12;
 import org.lwjgl.opengl.GL13;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class Blur {
     private static final UIShader shader = new UIShader("soar/shaders/vertex.vert", "soar/shaders/blur.frag");
@@ -34,7 +33,7 @@ public class Blur {
     private static Framebuffer fboEighth = new Framebuffer(Minecraft.getMinecraft().displayWidth / 8, Minecraft.getMinecraft().displayHeight / 8, false);
 
     private static final Minecraft mc = Minecraft.getMinecraft();
-    private static Map<Integer, Integer> nvgImages = new HashMap<>();
+    private static int nvgImage = -1;
 
     public static void init() {
         try {
@@ -49,8 +48,6 @@ public class Blur {
     private static void createFbos() {
         int w = mc.displayWidth;
         int h = mc.displayHeight;
-
-        nvgImages.clear();
 
         fboHalf.deleteFramebuffer();
         fboHalf = new Framebuffer(w / 2, h / 2, false);
@@ -87,15 +84,13 @@ public class Blur {
     }
 
     public static void render() {
-        render(mc.getFramebuffer().framebufferTexture);
+        render(InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat());
     }
 
-    public static int render(int sourceTexture) {
-        if (!nvgImages.containsKey(sourceTexture)) {
-            nvgImages.put(sourceTexture, nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight));
+    public static void render(float strength) {
+        if (nvgImage == -1) {
+            nvgImage = nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight);
         }
-
-        float settingStrength = InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat();
 
         GL11.glPushAttrib(GL11.GL_ALL_ATTRIB_BITS);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -105,11 +100,11 @@ public class Blur {
         fboHalf.framebufferClear();
         fboHalf.bindFramebuffer(true);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
-        GL11.glBindTexture(GL11.GL_TEXTURE_2D, sourceTexture);
+        mc.getFramebuffer().bindFramebufferTexture();
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth, mc.displayHeight));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 4f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * strength / 4f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -120,7 +115,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 2f, mc.displayHeight / 2f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 2f));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * strength / 2f));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -131,7 +126,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 4f, mc.displayHeight / 4f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * strength));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -142,7 +137,7 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 8f, mc.displayHeight / 8f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * strength));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
@@ -153,23 +148,15 @@ public class Blur {
         shader.attach();
         shader.uniform(Uniform.makeInt("uTex", 0));
         shader.uniform(Uniform.makeVec2("uResolution", mc.displayWidth / 4f, mc.displayHeight / 4f));
-        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * settingStrength / 2));
+        shader.uniform(Uniform.makeFloat("uRadius", 0.5f * strength / 2));
         shader.rect(0f, 0f, sr.getScaledWidth(), sr.getScaledHeight());
         shader.detach();
 
         mc.getFramebuffer().bindFramebuffer(true);
         GL11.glPopAttrib();
-
-        return nvgImages.get(sourceTexture);
     }
 
     public static void drawBlur(float x, float y, float w, float h, float radius) {
-        if(nvgImages.containsKey(mc.getFramebuffer().framebufferTexture)) {
-            drawBlur(nvgImages.get(mc.getFramebuffer().framebufferTexture), x, y, w, h, radius);
-        }
-    }
-
-    public static void drawBlur(int nvgImage, float x, float y, float w, float h, float radius) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
@@ -194,13 +181,11 @@ public class Blur {
         paint.free();
     }
 
-    public static void drawBlur(Runnable r) {
-        if(nvgImages.containsKey(mc.getFramebuffer().framebufferTexture)) {
-            drawBlur(nvgImages.get(mc.getFramebuffer().framebufferTexture), r);
-        }
+    public static void drawBlur(Rect rect, float radius) {
+        drawBlur(rect.x, rect.y, rect.width, rect.height, radius);
     }
 
-    public static void drawBlur(int nvgImage, Runnable r) {
+    public static void drawBlur(Runnable r) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);

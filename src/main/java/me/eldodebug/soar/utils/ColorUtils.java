@@ -101,6 +101,15 @@ public class ColorUtils {
 		
 		return new Color(r, g, b, alpha);
 	}
+
+	public static int applyAlpha(int color, int alpha) {
+
+		int r = (color >> 16) & 255;
+		int g = (color >> 8) & 255;
+		int b = color & 255;
+
+	 return (alpha << 24) | (r << 16) | (g << 8) | b;
+	}
 	
 	public static float getAlphaByInt(int color) {
 		

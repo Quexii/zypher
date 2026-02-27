@@ -2,6 +2,7 @@ package me.eldodebug.soar.gui.mainmenu.impl.welcome;
 
 import java.awt.Color;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
@@ -72,9 +73,10 @@ public class AccentColorSelectScene extends MainMenuScene {
 		int offsetX = 0;
 		int offsetY = 0;
 		int index = 1;
-		
+
+		Blur.drawBlur(x, y, width, height, 8);
 		nvg.drawRoundedRect(x, y, width, height, 8, this.getBackgroundColor());
-		nvg.drawCenteredText("Choose a accent color", x + (width / 2), y + 10, Color.WHITE, 16, Fonts.MEDIUM);
+		nvg.drawCenteredText("Choose a accent color", x + (width / 2), y + 14, Color.WHITE, 16, Fonts.MEDIUM);
 		nvg.drawRect(x, y + 27, width, 1, Color.WHITE);
 		
 		nvg.drawRoundedImage(new ResourceLocation("soar/backgrounds/example-vertical.png"), x + width - 108, y + 40, 96, 96, 6);
@@ -93,7 +95,7 @@ public class AccentColorSelectScene extends MainMenuScene {
 			
 			color.getAnimation().setAnimation(color.equals(currentColor) ? 1.0F : 0.0F, 16);
 			
-			nvg.drawCenteredText(LegacyIcon.CHECK, x + offsetX + 10 + (32 / 2), y + offsetY + 40 + 8, new Color(255, 255, 255, (int) (color.getAnimation().getValue() * 255)), 16, Fonts.LEGACYICON);
+			nvg.drawCenteredText(LegacyIcon.CHECK, x + offsetX + 10 + (32 / 2), y + offsetY + 40 + 16, new Color(255, 255, 255, (int) (color.getAnimation().getValue() * 255)), 16, Fonts.LEGACYICON);
 			
 			offsetX+=40;
 			
@@ -110,7 +112,7 @@ public class AccentColorSelectScene extends MainMenuScene {
 		nvg.restore();
 		
 		nvg.drawRoundedRect(x + width - 108, y + height - 26, 96, 20, 6, this.getBackgroundColor());
-		nvg.drawCenteredText("Next", x + width - 108 + (96 / 2), y + height - 20, Color.WHITE, 10, Fonts.REGULAR);
+		nvg.drawCenteredText("Next", x + width - 108 + (96 / 2), y + height - 15, Color.WHITE, 10, Fonts.REGULAR);
 	}
 	
 	@Override

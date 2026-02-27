@@ -43,7 +43,7 @@ public class CompKeybind extends Comp {
 		
 		nvg.drawGradientRoundedRect(this.getX(), this.getY(), width, 16, 4, accentColor.getColor1(), accentColor.getColor2());
 		
-		nvg.drawCenteredText(info, this.getX() + (width / 2), this.getY() + 5F, new Color(255, 255, 255), 8, Fonts.REGULAR);
+		nvg.drawCenteredText(info, this.getX() + (width / 2), this.getY() + 9f, new Color(255, 255, 255), 8, Fonts.REGULAR);
 	}
 	
 	@Override

@@ -100,7 +100,7 @@ public class HomeCategory extends Category {
 		for(Changelog c : changelogManager.getChangelogs()) {
 			float tbSize = nvg.getTextBoxHeight(c.getText(), 8, Fonts.MEDIUM, 174 - 33);
 			nvg.drawRoundedRect(this.getX() + 230 + 8, this.getY() + 40 + offsetChangelogY + ((tbSize/2)-4), 13, 13, 7F, c.getType().getColor());
-			nvg.drawCenteredText(c.getType().getText(), this.getX() + 230 + 8 + (13 / 2), this.getY() + 42F + offsetChangelogY + ((tbSize/2)-3), Color.WHITE, 7, Fonts.LEGACYICON);
+			nvg.drawCenteredText(c.getType().getText(), this.getX() + 230 + 8 + (13 / 2f), this.getY() + 42F + offsetChangelogY + ((tbSize/2)-3)+3.5f, Color.WHITE, 7, Fonts.LEGACYICON);
 			nvg.drawTextBox(c.getText(), this.getX() + 230 + 25, this.getY() + 43F + offsetChangelogY, 174 - 33, palette.getFontColor(ColorType.DARK), 8, Fonts.MEDIUM);
 			offsetChangelogY+= (int) (tbSize + 9);
 		}
@@ -121,7 +121,7 @@ public class HomeCategory extends Category {
 		nvg.drawRoundedRect(discordStartX, discordStartY, discordWidth, 86, 8, palette.getBackgroundColor(ColorType.DARK));
 		// Discord branding
 		nvg.drawRoundedRectVarying(discordStartX + discordWidth - 22, discordStartY, 22, 22, 0, 8, 8, 0, new Color(114, 137, 214));
-		nvg.drawCenteredText(LegacyIcon.DISCORD, discordStartX  + discordWidth - 11, discordStartY + 4, Color.WHITE, 14F, Fonts.LEGACYICON);
+		nvg.drawCenteredText(LegacyIcon.DISCORD, discordStartX  + discordWidth - 11, discordStartY + 4+7, Color.WHITE, 14F, Fonts.LEGACYICON);
 		// txt
 		nvg.drawText(TranslateText.JOIN_OUR_DISCORD_SERVER.getText(), discordStartX + standardPadding, discordStartY + standardPadding, palette.getFontColor(ColorType.DARK), 11F, Fonts.SEMIBOLD);
 		nvg.drawTextBox(TranslateText.DISCORD_DESCRIPTION.getText(), discordStartX + standardPadding, discordStartY + 26, discordWidth - 16, palette.getFontColor(ColorType.DARK), 8, Fonts.REGULAR);
@@ -134,7 +134,7 @@ public class HomeCategory extends Category {
 		}
 		// join button
 		nvg.drawRoundedRect(discordStartX + discordWidth - 60, discordStartY + 60, 52, 18, 9,  new Color(114, 137, 214));
-		nvg.drawCenteredText(TranslateText.JOIN.getText() + " >", discordStartX + discordWidth - 60 + (52 / 2), discordStartY + 66,  Color.WHITE, 7, Fonts.REGULAR);
+		nvg.drawCenteredText(TranslateText.JOIN.getText() + " >", discordStartX + discordWidth - 60 + (52 / 2), discordStartY + 66+3.5f,  Color.WHITE, 7, Fonts.REGULAR);
 
 	}
 

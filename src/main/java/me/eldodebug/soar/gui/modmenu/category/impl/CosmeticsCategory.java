@@ -111,7 +111,7 @@ public class CosmeticsCategory extends Category {
 				}
 			}
 			Color cColour = palette.getFontColor(ColorType.DARK);
-			nvg.drawCenteredText(cape.getName(), this.getX() + 15 + offsetX + (88 / 2), this.getY() + offsetY + 120.5F, cColour, 10, Fonts.MEDIUM);
+			nvg.drawCenteredText(cape.getName(), this.getX() + 15 + offsetX + (88 / 2), this.getY() + offsetY + 120.5F+5, cColour, 10, Fonts.MEDIUM);
 
 			offsetX += 100;
 
@@ -130,9 +130,9 @@ public class CosmeticsCategory extends Category {
 		nvg.restore();
 		if(currentCategory.equals(CapeCategory.CUSTOM)){
 			if (capeCount == 0){
-				nvg.drawCenteredText("You have no custom capes.", getX()+(getWidth()/2), getY() + (getHeight()/2) - 14, palette.getFontColor(ColorType.DARK), 12, Fonts.SEMIBOLD);
-				nvg.drawCenteredText("You can click the folder button at the top to open the folder!", getX()+(getWidth()/2), getY() + (getHeight()/2), palette.getFontColor(ColorType.DARK), 9, Fonts.MEDIUM);
-				nvg.drawCenteredText("(Glide only supports capes that are PNG using Minecraft layout. You may need to restart Glide!)", getX()+(getWidth()/2), getY() + (getHeight()/2) + 12, palette.getFontColor(ColorType.NORMAL), 7, Fonts.REGULAR);
+				nvg.drawCenteredText("You have no custom capes.", getX()+(getWidth()/2), getY() + (getHeight()/2) - 14+6, palette.getFontColor(ColorType.DARK), 12, Fonts.SEMIBOLD);
+				nvg.drawCenteredText("You can click the folder button at the top to open the folder!", getX()+(getWidth()/2), getY() + (getHeight()/2)+4.5f, palette.getFontColor(ColorType.DARK), 9, Fonts.MEDIUM);
+				nvg.drawCenteredText("(Glide only supports capes that are PNG using Minecraft layout. You may need to restart Glide!)", getX()+(getWidth()/2), getY() + (getHeight()/2) + 12+3.5f, palette.getFontColor(ColorType.NORMAL), 7, Fonts.REGULAR);
 			}
 			// you may need to reload the game
 		}

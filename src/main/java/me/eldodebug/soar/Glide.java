@@ -12,6 +12,7 @@ import me.eldodebug.soar.management.remote.news.NewsManager;
 import me.eldodebug.soar.management.remote.update.Update;
 import me.eldodebug.soar.ui.ClickEffects;
 import me.eldodebug.soar.utils.Sound;
+import me.eldodebug.soar.utils.render.EntityProjection;
 import org.apache.commons.lang3.ArrayUtils;
 
 import me.eldodebug.soar.injection.mixin.GlideTweaker;
@@ -120,6 +121,7 @@ public class Glide {
 		update.check();
 		waypointManager = new WaypointManager();
 
+		eventManager.register(EntityProjection.getInstance());
 		eventManager.register(new GlideHandler());
 
 		InternalSettingsMod.getInstance().setToggled(true);
@@ -128,9 +130,9 @@ public class Glide {
 	}
 	
 	public void stop() {
+		nanoVGManager.destroy();
 		profileManager.save();
 		Sound.play("soar/audio/close.wav", true);
-
 	}
 	
 	private void removeOptifineZoom() {

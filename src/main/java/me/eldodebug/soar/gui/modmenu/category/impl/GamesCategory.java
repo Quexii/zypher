@@ -117,7 +117,7 @@ public class GamesCategory extends Category {
 			sceneAnimation.setDirection(Direction.FORWARDS);
 		}
 
-		if(currentScene != null && mouseButton == 3) {
+		if(currentScene != null && mouseButton == 3 || mouseButton == 1) {
 			sceneAnimation.setDirection(Direction.FORWARDS);
 		}
 	}

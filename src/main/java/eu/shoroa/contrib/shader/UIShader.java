@@ -8,6 +8,7 @@ package eu.shoroa.contrib.shader;
 import eu.shoroa.contrib.shader.uniform.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
@@ -17,12 +18,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 public final class UIShader {
     private int pid, vid, fid;
     private String vSrc, fSrc;
     private VBO vbo;
+
+    private FloatBuffer vertexBuffer;
 
     public UIShader(String vSrc, String fSrc) {
         this.vSrc = vSrc;
@@ -35,6 +39,8 @@ public final class UIShader {
         pid = GL20.glCreateProgram();
         vid = createShader(vSrc, GL20.GL_VERTEX_SHADER);
         fid = createShader(fSrc, GL20.GL_FRAGMENT_SHADER);
+
+        vertexBuffer = BufferUtils.createFloatBuffer(16);
 
         GL20.glAttachShader(pid, vid);
         GL20.glAttachShader(pid, fid);
@@ -129,12 +135,13 @@ public final class UIShader {
     }
 
     public void rect(float x, float y, float w, float h) {
-        vbo.data(new float[]{
-                x, y, 0f, 1f,
-                x, y + h, 0f, 0f,
-                x + w, y + h, 1f, 0f,
-                x + w, y, 1f, 1f
-        });
+        vertexBuffer.clear();
+        vertexBuffer.put(x).put(y).put(0).put(1);
+        vertexBuffer.put(x).put(y + h).put(0).put(0);
+        vertexBuffer.put(x + w).put(y + h).put(1).put(0);
+        vertexBuffer.put(x + w).put(y).put(1).put(1);
+        vertexBuffer.flip();
+        vbo.data(vertexBuffer);
 
         vbo.bind();
         GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);

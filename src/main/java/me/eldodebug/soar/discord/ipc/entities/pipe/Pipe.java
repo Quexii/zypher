@@ -43,6 +43,7 @@ public abstract class Pipe {
         
         for(int i = 0; i < 10; i++) {
             try {
+
                 String location = getPipeLocation(i);
                 LOGGER.debug(String.format("Searching for IPC: %s", location));
                 pipe = createPipe(ipcClient, callbacks, location);
@@ -140,8 +141,12 @@ public abstract class Pipe {
 
         if (osName.contains("win")) {
             return new WindowsPipe(ipcClient, callbacks, location);
-        } else {
-            throw new RuntimeException("Unsupported OS: " + osName);
+        }
+
+        try {
+            return new UnixPipe(ipcClient, callbacks, location);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

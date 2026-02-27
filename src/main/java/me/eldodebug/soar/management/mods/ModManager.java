@@ -121,6 +121,7 @@ public class ModManager {
 		mods.add(new SoundSubtitlesMod());
 		mods.add(new SpeedometerMod());
 		mods.add(new StopwatchMod());
+		mods.add(new SuperHeroFxMod());
 		mods.add(new TabEditorMod());
 		mods.add(new TaplookMod());
 		mods.add(new TargetIndicatorMod());

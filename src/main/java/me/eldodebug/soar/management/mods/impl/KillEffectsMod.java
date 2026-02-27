@@ -37,14 +37,14 @@ import net.minecraft.util.ResourceLocation;
 public class KillEffectsMod extends Mod {
 
 	private ArrayList<EntityLivingBase> trackedEntities = new ArrayList<>();
-    private int entityID;
-    private ArrayList<PhysicsParticle> physicsParticles = new ArrayList<>();
+	private int entityID;
+	private ArrayList<PhysicsParticle> physicsParticles = new ArrayList<>();
 
-    private BooleanSetting soundSetting = new BooleanSetting(TranslateText.SOUND, this, true);
-    private ComboSetting effectSetting = new ComboSetting(TranslateText.EFFECT, this, TranslateText.BLOOD, new ArrayList<Option>(Arrays.asList(
-    		new Option(TranslateText.LIGHTING), new Option(TranslateText.FLAMES), new Option(TranslateText.CLOUD), new Option(TranslateText.BLOOD), new Option(TranslateText.PHYSICS))));
+	private BooleanSetting soundSetting = new BooleanSetting(TranslateText.SOUND, this, true);
+	private ComboSetting effectSetting = new ComboSetting(TranslateText.EFFECT, this, TranslateText.BLOOD, new ArrayList<Option>(Arrays.asList(
+			new Option(TranslateText.LIGHTING), new Option(TranslateText.FLAMES), new Option(TranslateText.CLOUD), new Option(TranslateText.BLOOD), new Option(TranslateText.PHYSICS))));
 
-    private NumberSetting multiplierSetting = new NumberSetting(TranslateText.MULTIPLIER, this, 1, 1, 10, true);
+	private NumberSetting multiplierSetting = new NumberSetting(TranslateText.MULTIPLIER, this, 1, 1, 10, true);
 
 	public KillEffectsMod() {
 		super(TranslateText.KILL_EFFECTS, TranslateText.KILL_EFFECTS_DESCRIPTION, ModCategory.RENDER);
@@ -126,12 +126,12 @@ public class KillEffectsMod extends Mod {
 					double velocityZ = (random.nextDouble() - 0.5) * 0.3;
 
 					physicsParticles.add(new PhysicsParticle(
-						target.posX + offsetX,
-						target.posY + offsetY,
-						target.posZ + offsetZ,
-						velocityX,
-						velocityY,
-						velocityZ
+							target.posX + offsetX,
+							target.posY + offsetY,
+							target.posZ + offsetZ,
+							velocityX,
+							velocityY,
+							velocityZ
 					));
 				}
 

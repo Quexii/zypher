@@ -1,5 +1,6 @@
 package me.eldodebug.soar.gui.mainmenu.impl;
 
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
@@ -37,6 +38,7 @@ public class DiscontinuedSoar8 extends MainMenuScene {
 		int acX = sr.getScaledWidth() / 2 - (acWidth / 2);
 		int acY = sr.getScaledHeight() / 2 - (acHeight / 2);
 
+		Blur.drawBlur(acX, acY, acWidth, acHeight, 8);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 20, new Color(245, 249, 239));
 		nvg.drawCenteredText("Soar Client 8", acX + (acWidth / 2), acY + 12, new Color(24, 29, 23), 14, Fonts.SEMIBOLD);
 

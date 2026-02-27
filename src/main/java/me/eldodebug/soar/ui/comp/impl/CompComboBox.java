@@ -48,7 +48,7 @@ public class CompComboBox extends Comp {
 		
 		nvg.drawGradientRoundedRect(this.getX(), this.getY(), width, 16, 4, accentColor.getColor1(), accentColor.getColor2());
 		
-		nvg.drawCenteredText(setting.getOption().getName(), this.getX() + (width / 2) + ((changeDirection - changeAnimation.getValue()) * 22), this.getY() + 5F, new Color(255, 255, 255, (int) (MathUtils.abs(changeAnimation.getValue()  * 255))), 8, Fonts.REGULAR);
+		nvg.drawCenteredText(setting.getOption().getName(), this.getX() + (width / 2) + ((changeDirection - changeAnimation.getValue()) * 22), this.getY() + 9F, new Color(255, 255, 255, (int) (MathUtils.abs(changeAnimation.getValue()  * 255))), 8, Fonts.REGULAR);
 		
 		nvg.drawText("<", this.getX() + 4, this.getY() + 4F, Color.WHITE, 10, Fonts.REGULAR);
 		nvg.drawText(">", this.getX() + width - 10, this.getY() + 4F, Color.WHITE, 10, Fonts.REGULAR);

@@ -1,6 +1,5 @@
 package me.eldodebug.soar.management.mods.impl;
 
-import eu.shoroa.contrib.util.Projection;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.event.EventTarget;
 import me.eldodebug.soar.management.event.impl.EventAttackEntity;
@@ -11,6 +10,7 @@ import me.eldodebug.soar.management.mods.Mod;
 import me.eldodebug.soar.management.mods.ModCategory;
 import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.utils.proj.Projection;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.EntityLivingBase;

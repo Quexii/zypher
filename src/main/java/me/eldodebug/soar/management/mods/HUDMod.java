@@ -17,7 +17,6 @@ import me.eldodebug.soar.management.nanovg.font.Font;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.ColorUtils;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.nanovg.NanoVG;
 
 public class HUDMod extends Mod {
 
@@ -88,7 +87,6 @@ public class HUDMod extends Mod {
 		NanoVGManager nvg = instance.getNanoVGManager();
 
 		nvg.drawPlayerHead(location, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
-		nvg.drawOutlineRoundedRect(x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale, 0.7F, getFontColor(80));
 	}
 
 	public void drawRoundedImage(int texture, float addX, float addY, float width, float height, float radius) {
@@ -235,9 +233,8 @@ public class HUDMod extends Mod {
 		}
 		if(isModern) {
 			nvg.drawRoundedRect(x, y, lastWidth, lastHeight, radius, new Color(0, 0, 0, 110));
-			nvg.drawOutlineRoundedRect(x - 0.25f, y - 0.25f, lastWidth + 0.5f, lastHeight + 0.5f, radius + 0.5f, 0.7F,  new Color(255,255,255,50));
+			nvg.drawOutlineRoundedRect(x, y, lastWidth, lastHeight, radius, .5F,  new Color(255,255,255,80));
 		}
-
 	}
 
 	public void drawBackground(float width, float height) {
@@ -255,8 +252,8 @@ public class HUDMod extends Mod {
 	public void drawText(String text, float addX, float addY, float size, Font font, Color color) {
 
 		if(font == Fonts.MOJANGLES) {
-			addX = addX  - 0.5F;
-			addY = addY  - 1.3F;
+			addX = addX - 0.5F;
+			addY = addY - 1.3F;
 		}
 
 		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
@@ -286,6 +283,10 @@ public class HUDMod extends Mod {
 	}
 
 	public void drawCenteredText(String text, float addX, float addY, float size, Font font, Color color) {
+
+		if (font == Fonts.MOJANGLES) {
+			addY = addY - 1F;
+		}
 
 		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
 		float lastSize = size * scale;
