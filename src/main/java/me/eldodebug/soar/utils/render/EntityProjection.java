@@ -8,6 +8,7 @@ import me.eldodebug.soar.management.event.impl.EventRender3D;
 import me.eldodebug.soar.types.Rect;
 import me.eldodebug.soar.utils.proj.Projection;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3;
@@ -16,6 +17,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static me.eldodebug.soar.utils.proj.Projection.VIEWPORT;
+
 public class EntityProjection {
     private static EntityProjection instance;
 
@@ -23,9 +26,6 @@ public class EntityProjection {
     private static final float SMOOTHING_FACTOR = 0.85f;
 
     private final Map<Entity, Rect> positionMap = new HashMap<>();
-    private final Map<Entity, Rect> prevScreenPositions = new HashMap<>();
-    private final Map<Entity, Vec3> prevPositions = new HashMap<>();
-    private final Map<Entity, Vec3> currPositions = new HashMap<>();
 
     public EntityProjection() {
         instance = this;
@@ -41,109 +41,57 @@ public class EntityProjection {
 
     @EventTarget
     private void onRender3D(EventRender3D event) {
-        if (mc.theWorld == null || mc.getRenderManager() == null) return;
+        if (mc.theWorld == null || mc.thePlayer == null) return;
 
         positionMap.clear();
-        prevScreenPositions.clear();
-        prevPositions.clear();
-        currPositions.clear();
 
+        RenderManager renderManager = mc.getRenderManager();
+        double viewerX = renderManager.viewerPosX;
+        double viewerY = renderManager.viewerPosY;
+        double viewerZ = renderManager.viewerPosZ;
         float partialTicks = event.getPartialTicks();
-        IMixinRenderManager renderManager = ((IMixinRenderManager) mc.getRenderManager());
+
+        float screenWidth = VIEWPORT.get(2);
+        float screenHeight = VIEWPORT.get(3);
 
         for (Entity entity : mc.theWorld.loadedEntityList) {
-            if (entity == mc.thePlayer) continue;
+            if (entity == null || entity == mc.thePlayer) continue;
+//            if (!shouldRender(entity)) continue;
 
-            AxisAlignedBB bb = entity.getEntityBoundingBox();
+            double x = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * partialTicks - viewerX;
+            double y = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * partialTicks - viewerY;
+            double z = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * partialTicks - viewerZ;
 
-            Vec3 prev = prevPositions.getOrDefault(entity, new Vec3(entity.prevPosX, entity.prevPosY, entity.prevPosZ));
-            Vec3 curr = currPositions.getOrDefault(entity, new Vec3(entity.posX, entity.posY, entity.posZ));
-            double interpX = prev.xCoord + (curr.xCoord - prev.xCoord) * partialTicks;
-            double interpY = prev.yCoord + (curr.yCoord - prev.yCoord) * partialTicks;
-            double interpZ = prev.zCoord + (curr.zCoord - prev.zCoord) * partialTicks;
+            double halfWidth = entity.width / 2.0;
+            double height = entity.height;
 
-            Vec3[] corners = new Vec3[]{
-                    new Vec3(bb.minX - entity.posX + interpX, bb.minY - entity.posY + interpY, bb.minZ - entity.posZ + interpZ),
-                    new Vec3(bb.minX - entity.posX + interpX, bb.maxY - entity.posY + interpY, bb.minZ - entity.posZ + interpZ),
-                    new Vec3(bb.maxX - entity.posX + interpX, bb.maxY - entity.posY + interpY, bb.minZ - entity.posZ + interpZ),
-                    new Vec3(bb.maxX - entity.posX + interpX, bb.minY - entity.posY + interpY, bb.minZ - entity.posZ + interpZ),
-                    new Vec3(bb.minX - entity.posX + interpX, bb.minY - entity.posY + interpY, bb.maxZ - entity.posZ + interpZ),
-                    new Vec3(bb.minX - entity.posX + interpX, bb.maxY - entity.posY + interpY, bb.maxZ - entity.posZ + interpZ),
-                    new Vec3(bb.maxX - entity.posX + interpX, bb.maxY - entity.posY + interpY, bb.maxZ - entity.posZ + interpZ),
-                    new Vec3(bb.maxX - entity.posX + interpX, bb.minY - entity.posY + interpY, bb.maxZ - entity.posZ + interpZ)
-            };
+            float minX = Float.MAX_VALUE, minY = Float.MAX_VALUE;
+            float maxX = -Float.MAX_VALUE, maxY = -Float.MAX_VALUE;
+            boolean visible = false;
 
-            float minX = Float.MAX_VALUE;
-            float minY = Float.MAX_VALUE;
-            float maxX = Float.MIN_VALUE;
-            float maxY = Float.MIN_VALUE;
+            for (int i = 0; i < 8; i++) {
+                double cornerX = (i & 1) == 0 ? x - halfWidth : x + halfWidth;
+                double cornerY = (i & 2) == 0 ? y : y + height;
+                double cornerZ = (i & 4) == 0 ? z - halfWidth : z + halfWidth;
 
-            boolean isInFront = false;
-            int validProjections = 0;
+                Vec3 screenPos = Projection.w2s((float) cornerX, (float) cornerY, (float) cornerZ);
 
-            for (Vec3 corner : corners) {
-                float x = (float) (corner.xCoord - renderManager.getRenderPosX());
-                float y = (float) (corner.yCoord - renderManager.getRenderPosY());
-                float z = (float) (corner.zCoord - renderManager.getRenderPosZ());
-
-                Vec3 screenPos = Projection.w2s(x, y, z);
-
-                if (screenPos.xCoord != 0f || screenPos.yCoord != 0f) {
-                    if (screenPos.zCoord < 1.0f) {
-                        isInFront = true;
-                        validProjections++;
-
-                        minX = (float) Math.min(minX, screenPos.xCoord);
-                        minY = (float) Math.min(minY, screenPos.yCoord);
-                        maxX = (float) Math.max(maxX, screenPos.xCoord);
-                        maxY = (float) Math.max(maxY, screenPos.yCoord);
-                    }
+                if (screenPos != null && screenPos.zCoord > 0) {
+                    visible = true;
+                    minX = (float) Math.min(minX, screenPos.xCoord);
+                    minY = (float) Math.min(minY, screenPos.yCoord);
+                    maxX = (float) Math.max(maxX, screenPos.xCoord);
+                    maxY = (float) Math.max(maxY, screenPos.yCoord);
                 }
             }
 
-            if (isInFront && validProjections >= 2 && minX < Float.MAX_VALUE && maxX > Float.MIN_VALUE) {
-                if (maxX >= 0 && minX <= mc.displayWidth &&
-                        maxY >= 0 && minY <= mc.displayHeight) {
+            if (visible) {
+                minX = Math.max(0, minX);
+                minY = Math.max(0, minY);
+                maxX = Math.min(mc.displayWidth, maxX);
+                maxY = Math.min(mc.displayHeight, maxY);
 
-                    float width = maxX - minX;
-                    float height = maxY - minY;
-
-                    if (width > 1 && height > 1 && width < mc.displayWidth && height < mc.displayHeight) {
-                        Rect newRect = new Rect(minX, minY, width, height);
-                        Rect prevRect = prevScreenPositions.get(entity);
-
-                        if (prevRect != null) {
-                            float smoothX = prevRect.x + (newRect.x - prevRect.x) * (1f - SMOOTHING_FACTOR);
-                            float smoothY = prevRect.y + (newRect.y - prevRect.y) * (1f - SMOOTHING_FACTOR);
-                            float smoothW = prevRect.width + (newRect.width - prevRect.width) * (1f - SMOOTHING_FACTOR);
-                            float smoothH = prevRect.height + (newRect.height - prevRect.height) * (1f - SMOOTHING_FACTOR);
-                            positionMap.put(entity, new Rect(smoothX, smoothY, smoothW, smoothH));
-                            prevScreenPositions.put(entity, new Rect(smoothX, smoothY, smoothW, smoothH));
-                        } else {
-                            positionMap.put(entity, newRect);
-                            prevScreenPositions.put(entity, newRect);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    @EventTarget
-    private void onRender2D(EventRender2D event) {
-        if (mc.theWorld == null) return;
-
-        for (Entity entity : mc.theWorld.loadedEntityList) {
-            if (entity == mc.thePlayer) continue;
-            prevPositions.put(entity, currPositions.getOrDefault(entity, new Vec3(entity.prevPosX, entity.prevPosY, entity.prevPosZ)));
-            currPositions.put(entity, new Vec3(entity.posX, entity.posY, entity.posZ));
-        }
-
-        Iterator<Map.Entry<Entity, Rect>> it = prevScreenPositions.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Entity, Rect> entry = it.next();
-            if (!positionMap.containsKey(entry.getKey())) {
-                it.remove();
+                positionMap.put(entity, new Rect(minX, minY, maxX - minX, maxY - minY));
             }
         }
     }

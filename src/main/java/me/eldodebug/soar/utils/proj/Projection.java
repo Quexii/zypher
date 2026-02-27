@@ -8,10 +8,10 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public class Projection {
-    static FloatBuffer MODELVIEW;
-    static FloatBuffer PROJECTION;
-    static IntBuffer VIEWPORT;
-    static FloatBuffer SCREEN_COORDS = BufferUtils.createFloatBuffer(3);
+    public static FloatBuffer MODELVIEW;
+    public static FloatBuffer PROJECTION;
+    public static IntBuffer VIEWPORT;
+    public static FloatBuffer SCREEN_COORDS = BufferUtils.createFloatBuffer(3);
 
     public static void update(FloatBuffer modelView, FloatBuffer projection, IntBuffer viewport) {
         MODELVIEW = modelView;
@@ -22,15 +22,18 @@ public class Projection {
     public static Vec3 w2s(float x, float y, float z) {
         SCREEN_COORDS.clear();
 
-        boolean result = GLU.gluProject(
-                x, y, z,
-                MODELVIEW, PROJECTION, VIEWPORT, SCREEN_COORDS
-        );
+        boolean valid = GLU.gluProject(x, y, z, MODELVIEW, PROJECTION, VIEWPORT, SCREEN_COORDS);
 
-        if (result) {
-            return new Vec3(SCREEN_COORDS.get(0), VIEWPORT.get(3) - SCREEN_COORDS.get(1), SCREEN_COORDS.get(2));
-        } else {
-            return new Vec3(0f, 0f, 1f);
+        if (!valid) return null;
+
+        float screenX = SCREEN_COORDS.get(0);
+        float screenY = SCREEN_COORDS.get(1);
+        float screenZ = SCREEN_COORDS.get(2);
+
+        if (screenZ < 0 || screenZ > 1) {
+            return null;
         }
+
+        return new Vec3(screenX, VIEWPORT.get(3) - screenY, screenZ);
     }
 }
