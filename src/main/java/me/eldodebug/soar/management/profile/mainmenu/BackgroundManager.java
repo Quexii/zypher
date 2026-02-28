@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.file.FileManager;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.profile.mainmenu.impl.Background;
 import me.eldodebug.soar.management.profile.mainmenu.impl.CustomBackground;
 import me.eldodebug.soar.management.profile.mainmenu.impl.DefaultBackground;
@@ -164,7 +164,7 @@ public class BackgroundManager {
 	
 	public void removeCustomBackground(CustomBackground cusBackground) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		nvg.getAssetManager().removeImage(nvg.getContext(), cusBackground.getImage());
 		backgrounds.remove(cusBackground);

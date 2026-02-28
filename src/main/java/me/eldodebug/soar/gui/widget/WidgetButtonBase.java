@@ -2,7 +2,7 @@ package me.eldodebug.soar.gui.widget;
 
 import eu.shoroa.contrib.animation.Animate;
 import eu.shoroa.contrib.animation.Easing;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 
 public abstract class WidgetButtonBase extends Widget {
     private Runnable onClick;
@@ -25,7 +25,7 @@ public abstract class WidgetButtonBase extends Widget {
     }
 
     @Override
-    public void render(NanoVGManager renderer, float mouseX, float mouseY) {
+    public void render(NvRenderer renderer, float mouseX, float mouseY) {
         isHovered = isHovered(mouseX, mouseY);
 
         hoverAnimation.update();

@@ -7,7 +7,7 @@ import me.eldodebug.soar.management.color.AccentColor;
 import me.eldodebug.soar.management.color.ColorManager;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import org.lwjgl.input.Keyboard;
@@ -53,7 +53,7 @@ public class BirdScene extends GameScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		DeltaTime.getInstance().update(); // bad practice
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorManager colorManager = instance.getColorManager();
 		ColorPalette palette = colorManager.getPalette();
 		AccentColor currentColor = colorManager.getCurrentColor();
@@ -147,7 +147,7 @@ public class BirdScene extends GameScene {
 		playerTargetYPosition = playerTargetYPosition - (gravity /3);
 	}
 
-	private void drawPlayer(NanoVGManager nvg, AccentColor currentColor){
+	private void drawPlayer(NvRenderer nvg, AccentColor currentColor){
 		if(!isPlayerDead) {
 			playerTargetYPosition = Math.min(height - 5, playerTargetYPosition + (gravity * deltaTime)) ;
 			playerActualYPosition = anim(playerActualYPosition, playerTargetYPosition, 10F, deltaTime);
@@ -155,7 +155,7 @@ public class BirdScene extends GameScene {
 		nvg.drawGradientRoundedRect(playerX - (playerWidth/2), y + playerActualYPosition - (playerWidth/2), playerWidth, playerWidth, 3, currentColor.getColor1(), currentColor.getColor2());
 	}
 
-	private void drawPipes(NanoVGManager nvg){
+	private void drawPipes(NvRenderer nvg){
 		// new pipes
 		if (pipeOneX < (x - pipeWidth)){
 			pipeOneX = x + width + pipeWidth;

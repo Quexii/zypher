@@ -2,16 +2,14 @@ package me.eldodebug.soar.gui.mainmenu.impl;
 
 import java.awt.Color;
 
-import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
 import me.eldodebug.soar.gui.mainmenu.widget.WidgetPlayButton;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.Icons;
-import me.eldodebug.soar.utils.mouse.MouseUtils;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiSelectWorld;
@@ -40,12 +38,12 @@ public class MainScene extends MainMenuScene {
             instance.setUpdateNeeded(false);
             this.setCurrentScene(this.getSceneByClass(UpdateScene.class));
         }
-        NanoVGManager nvg = instance.getNanoVGManager();
+        NvRenderer nvg = instance.getNanoVGManager();
 
         nvg.setupAndDraw(() -> drawNanoVG(nvg, mouseX, mouseY));
     }
 
-    private void drawNanoVG(NanoVGManager nvg, int mouseX, int mouseY) {
+    private void drawNanoVG(NvRenderer nvg, int mouseX, int mouseY) {
 
         ScaledResolution sr = new ScaledResolution(mc);
 

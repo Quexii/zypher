@@ -10,8 +10,7 @@ import me.eldodebug.soar.management.event.impl.EventUpdate;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.GlUtils;
 import me.eldodebug.soar.utils.render.RenderUtils;
 import net.minecraft.client.renderer.GlStateManager;
@@ -45,7 +44,7 @@ public class PotionStatusMod extends HUDMod {
 	@EventTarget
 	public void onRender2D(EventRender2D event) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		nvg.setupAndDraw(() -> drawNanoVG(nvg));
 		
@@ -79,7 +78,7 @@ public class PotionStatusMod extends HUDMod {
 		}
 	}
 	
-	private void drawNanoVG(NanoVGManager nvg) {
+	private void drawNanoVG(NvRenderer nvg) {
 		
 		int ySize = compactSetting.isToggled() ? 16 : 23;
 		int offsetY = 16;

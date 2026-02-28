@@ -8,7 +8,7 @@ import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.ui.comp.Comp;
@@ -38,7 +38,7 @@ public class GeneralScene extends SettingScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorManager colorManager = instance.getColorManager();
 		ColorPalette palette = colorManager.getPalette();
 		int offsetY = 0;
@@ -48,7 +48,7 @@ public class GeneralScene extends SettingScene {
 		drawItemInList(TranslateText.MC_FONT.getText(), "If the client should use the minecraft font for the hud", this.getY(), offsetY, 46, mcFontSetting, nvg, palette, mouseX, mouseY, partialTicks); offsetY += 51;
 	}
 
-	 private void drawItemInList(String title, String description, float y, float offset, float xRemove, Comp comp, NanoVGManager nvg, ColorPalette palette, int mouseX, int mouseY, float partialTicks) {
+	 private void drawItemInList(String title, String description, float y, float offset, float xRemove, Comp comp, NvRenderer nvg, ColorPalette palette, int mouseX, int mouseY, float partialTicks) {
 		 nvg.drawRoundedRect(this.getX(), y + offset, this.getWidth(), 41, 6, palette.getBackgroundColor(ColorType.DARK));
 		 nvg.drawText(title, this.getX() + 8, y + 9.5F + offset, palette.getFontColor(ColorType.DARK), 12.5F, Fonts.MEDIUM);
 		 nvg.drawText(description, this.getX() + 8, y + 23.5F + offset,  palette.getFontColor(ColorType.NORMAL), 7.5F, Fonts.REGULAR);

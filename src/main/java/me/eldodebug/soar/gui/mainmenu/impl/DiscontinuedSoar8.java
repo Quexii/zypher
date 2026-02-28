@@ -4,9 +4,8 @@ import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
-import me.eldodebug.soar.management.remote.update.Update;
 import me.eldodebug.soar.utils.mouse.MouseUtils;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.input.Keyboard;
@@ -26,19 +25,19 @@ public class DiscontinuedSoar8 extends MainMenuScene {
 		ScaledResolution sr = new ScaledResolution(mc);
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		
 		nvg.setupAndDraw(() -> drawNanoVG(mouseX, mouseY, sr, instance, nvg));
 	}
 
-	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NanoVGManager nvg) {
+	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NvRenderer nvg) {
 		nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0, 0, 0, 210));
 		int acWidth = 350;
 		int acHeight = 190;
 		int acX = sr.getScaledWidth() / 2 - (acWidth / 2);
 		int acY = sr.getScaledHeight() / 2 - (acHeight / 2);
 
-		Blur.drawBlur(acX, acY, acWidth, acHeight, 8);
+		Blur.render(acX, acY, acWidth, acHeight, 8);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 20, new Color(245, 249, 239));
 		nvg.drawCenteredText("Soar Client 8", acX + (acWidth / 2), acY + 12, new Color(24, 29, 23), 14, Fonts.SEMIBOLD);
 

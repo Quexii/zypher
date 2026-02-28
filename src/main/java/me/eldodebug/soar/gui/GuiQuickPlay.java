@@ -7,7 +7,7 @@ import org.lwjgl.input.Keyboard;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.quickplay.QuickPlay;
 import me.eldodebug.soar.management.quickplay.QuickPlayCommand;
@@ -56,7 +56,7 @@ public class GuiQuickPlay extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		BlurUtils.drawBlurScreen(20);
 		
@@ -72,7 +72,7 @@ public class GuiQuickPlay extends GuiScreen {
 	private void drawNanoVG() {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorPalette palette = instance.getColorManager().getPalette();
 		QuickPlayManager quickPlayManager = instance.getQuickPlayManager();
 		

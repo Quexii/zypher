@@ -7,8 +7,7 @@ import me.eldodebug.soar.management.event.EventTarget;
 import me.eldodebug.soar.management.event.impl.EventRender2D;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.HUDMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityHorse;
 
@@ -23,7 +22,7 @@ public class HorseStatsMod extends HUDMod {
 	@EventTarget
 	public void onRender2D(EventRender2D event) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		nvg.setupAndDraw(() -> drawNanoVG());
 	}

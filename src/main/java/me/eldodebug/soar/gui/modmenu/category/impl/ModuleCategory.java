@@ -25,7 +25,7 @@ import me.eldodebug.soar.management.mods.settings.impl.KeybindSetting;
 import me.eldodebug.soar.management.mods.settings.impl.NumberSetting;
 import me.eldodebug.soar.management.mods.settings.impl.SoundSetting;
 import me.eldodebug.soar.management.mods.settings.impl.TextSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.ui.comp.Comp;
@@ -83,7 +83,7 @@ public class ModuleCategory extends Category {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ModManager modManager = instance.getModManager();
 		ColorManager colorManager = instance.getColorManager();
 		ColorPalette palette = colorManager.getPalette();
@@ -306,7 +306,7 @@ public class ModuleCategory extends Category {
 	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ModManager modManager = instance.getModManager();
 		
 		int offsetX = 0;

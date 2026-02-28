@@ -9,11 +9,10 @@ import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.types.Rect;
-import me.eldodebug.soar.utils.TargetUtils;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
 import me.eldodebug.soar.utils.animation.normal.easing.EaseBackIn;
@@ -114,7 +113,7 @@ public class TargetInfoMod extends HUDMod {
         healthAnimation.setAnimation(health, 16);
         armorAnimation.setAnimation(armor, 16);
 
-        NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+        NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 
         this.drawBackground(-(getX() * getScale()) + (x - (width - w) / 2f), -(getY() * getScale()) + (y - (getHeight() - h) / 2f), getWidth(), 43, 6 * getScale());
         nvg.translate(x - (width - w) / 2f, y - (getHeight() - h) / 2f);

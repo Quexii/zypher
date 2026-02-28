@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import eu.shoroa.contrib.render.Blur;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
 import me.eldodebug.soar.utils.animation.normal.easing.EaseInOutCirc;
@@ -17,7 +18,6 @@ import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.file.FileManager;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.management.profile.mainmenu.BackgroundManager;
@@ -48,14 +48,14 @@ public class BackgroundScene extends MainMenuScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		ScaledResolution sr = new ScaledResolution(mc);
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		screenAnimation.wrap(() -> drawNanoVG(mouseX, mouseY, sr, instance, nvg), 0, 0, sr.getScaledWidth(), sr.getScaledHeight(), 2 - introAnimation.getValueFloat(), Math.min(introAnimation.getValueFloat(), 1), false);
 		if(introAnimation.isDone(Direction.BACKWARDS)) {
 			this.setCurrentScene(this.getSceneByClass(MainScene.class));
 		}
 	}
 
-	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NanoVGManager nvg) {
+	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NvRenderer nvg) {
 		BackgroundManager backgroundManager = instance.getProfileManager().getBackgroundManager();
 		ColorPalette palette = instance.getColorManager().getPalette();
 
@@ -71,7 +71,7 @@ public class BackgroundScene extends MainMenuScene {
 		scroll.onScroll();
 		scroll.onAnimation();
 
-		Blur.drawBlur(acX, acY, acWidth, acHeight, 8f);
+		Blur.render(acX, acY, acWidth, acHeight, 8f);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 8, this.getBackgroundColor());
 		nvg.drawCenteredText(TranslateText.SELECT_BACKGROUND.getText(), acX + (acWidth / 2), acY + 15, Color.WHITE, 14, Fonts.SEMIBOLD);
 

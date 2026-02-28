@@ -3,13 +3,13 @@ package me.eldodebug.soar.gui;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import org.lwjgl.input.Keyboard;
 
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.color.ColorManager;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.management.waypoint.Waypoint;
@@ -76,7 +76,7 @@ public class GuiWaypoint extends GuiScreen {
 	private void drawNanoVG(int mouseX, int mouseY, float partialTicks) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		WaypointManager waypointManager = instance.getWaypointManager();
 		ColorManager colorManager = instance.getColorManager();
 		ColorPalette palette = colorManager.getPalette();

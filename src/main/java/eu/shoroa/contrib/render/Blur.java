@@ -83,11 +83,11 @@ public class Blur {
         createFbos();
     }
 
-    public static void render() {
-        render(InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat());
+    public static void capture() {
+        capture(InternalSettingsMod.getInstance().getBlurStrengthSetting().getValueFloat());
     }
 
-    public static void render(float strength) {
+    public static void capture(float strength) {
         if (nvgImage == -1) {
             nvgImage = nvgImageFromHandle(fboHalf.framebufferTexture, mc.displayWidth, mc.displayHeight);
         }
@@ -156,7 +156,7 @@ public class Blur {
         GL11.glPopAttrib();
     }
 
-    public static void drawBlur(float x, float y, float w, float h, float radius) {
+    public static void render(float x, float y, float w, float h, float radius) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);
@@ -181,11 +181,11 @@ public class Blur {
         paint.free();
     }
 
-    public static void drawBlur(Rect rect, float radius) {
-        drawBlur(rect.x, rect.y, rect.width, rect.height, radius);
+    public static void render(Rect rect, float radius) {
+        render(rect.x, rect.y, rect.width, rect.height, radius);
     }
 
-    public static void drawBlur(Runnable r) {
+    public static void render(Runnable r) {
         if (!InternalSettingsMod.getInstance().getBlurSetting().isToggled()) return;
         long ctx = Glide.getInstance().getNanoVGManager().getContext();
         ScaledResolution sr = new ScaledResolution(mc);

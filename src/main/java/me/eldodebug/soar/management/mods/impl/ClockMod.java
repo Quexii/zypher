@@ -18,8 +18,7 @@ import me.eldodebug.soar.management.mods.SimpleHUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 
 public class ClockMod extends SimpleHUDMod {
@@ -58,7 +57,7 @@ public class ClockMod extends SimpleHUDMod {
 	private void drawNanoVG() {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		
 		float scale = this.getScale();
 		int size = 128;

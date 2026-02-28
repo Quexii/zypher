@@ -7,7 +7,7 @@ import me.eldodebug.soar.management.color.AccentColor;
 import me.eldodebug.soar.management.color.ColorManager;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.mouse.MouseUtils;
@@ -51,7 +51,7 @@ public class ClickyCatScene extends GameScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		DeltaTime.getInstance().update();
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorManager colorManager = instance.getColorManager();
 		ColorPalette palette = colorManager.getPalette();
 		AccentColor currentColor = colorManager.getCurrentColor();
@@ -81,7 +81,7 @@ public class ClickyCatScene extends GameScene {
 		nvg.drawOutlineRoundedRect(getX(), getY(), getWidth(), getHeight(), 10, 8, palette.getBackgroundColor(ColorType.NORMAL));
 	}
 
-	private void gameLogic(NanoVGManager nvg, AccentColor currentColor) {
+	private void gameLogic(NvRenderer nvg, AccentColor currentColor) {
 		currentTimeAverage = (float) (System.currentTimeMillis() - currentTimeStart);
 		progressBarProgress = anim(progressBarProgress, ((float) currentRound / (float) rounds) * (getWidth() - 8F), 3F, deltaTime);
 		nvg.drawRoundedRect(getX() + 4, getY() + getHeight() - 6, progressBarProgress, 3, 1.5F, currentColor.getColor1());
@@ -142,7 +142,7 @@ public class ClickyCatScene extends GameScene {
 		return (int)(10 + (random.nextFloat() * 30));
 	}
 
-	private void drawCat(NanoVGManager nvg, float x, float y){
+	private void drawCat(NvRenderer nvg, float x, float y){
 		nvg.drawImage(catImage, x, y, 32,32);
 	}
 

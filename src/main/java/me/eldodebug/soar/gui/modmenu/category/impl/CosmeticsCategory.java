@@ -15,7 +15,7 @@ import me.eldodebug.soar.management.color.ColorManager;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.ColorUtils;
@@ -46,7 +46,7 @@ public class CosmeticsCategory extends Category {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorManager colorManager = instance.getColorManager();
 		AccentColor accentColor = colorManager.getCurrentColor();
 		ColorPalette palette = colorManager.getPalette();
@@ -147,7 +147,7 @@ public class CosmeticsCategory extends Category {
 		if(!MouseUtils.isInside(mouseX, mouseY, getX(), getY(), getWidth(), getHeight())) return;
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		int offsetX = 0;
 		float offsetY = 13 + scroll.getValue();

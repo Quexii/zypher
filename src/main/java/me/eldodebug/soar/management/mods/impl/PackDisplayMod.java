@@ -11,8 +11,7 @@ import me.eldodebug.soar.management.event.impl.EventSwitchTexture;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.ColorUtils;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureUtil;
@@ -43,7 +42,7 @@ public class PackDisplayMod extends HUDMod {
 	public void onRender2D(EventRender2D event) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		
 		if(pack == null) {
 			pack = this.getCurrentPack();

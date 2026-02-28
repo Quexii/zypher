@@ -2,7 +2,7 @@ package me.eldodebug.soar.gui.mainmenu.widget;
 
 import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.gui.widget.WidgetButtonBase;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Font;
 import me.eldodebug.soar.types.Color;
 import me.eldodebug.soar.utils.MathUtils;
@@ -25,7 +25,7 @@ public class WidgetMenuIconButton extends WidgetButtonBase {
     }
 
     @Override
-    public void render(NanoVGManager renderer, float mouseX, float mouseY) {
+    public void render(NvRenderer renderer, float mouseX, float mouseY) {
         super.render(renderer, mouseX, mouseY);
 
         if (isHovered) hoverAnimation.forceFinish();
@@ -33,7 +33,7 @@ public class WidgetMenuIconButton extends WidgetButtonBase {
         Color.Interpolate(TEXT_BASE, hoverColor, hoverAnimation.getLinearValue(), TEXT);
         COLOR.setAlpha(0.3f + hoverAnimation.getLinearValue() * 0.2f);
 
-        Blur.drawBlur(getBounds(), 4.5F);
+        Blur.render(getBounds(), 4.5F);
         renderer.drawRoundedRect(getBounds(), 4.5F, COLOR.toARGB());
         renderer.drawBlurredText(icon, getX() + getWidth() / 2f, getY() + getHeight() / 2f, MathUtils.interpolateARGB(0xFF000000, hoverColor.toARGB(), hoverAnimation.getLinearValue()), 12f, 16F, NanoVG.NVG_ALIGN_CENTER | NanoVG.NVG_ALIGN_MIDDLE, iconFont);
         renderer.drawCenteredText(icon, getX() + getWidth() / 2f, getY() + getHeight() / 2f, TEXT.toARGB(), 16F, iconFont);

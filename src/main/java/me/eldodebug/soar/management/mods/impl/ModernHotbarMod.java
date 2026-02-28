@@ -15,7 +15,7 @@ import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.ColorUtils;
 import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 import net.minecraft.client.gui.ScaledResolution;
@@ -47,7 +47,7 @@ public class ModernHotbarMod extends HUDMod {
 	@EventTarget
 	public void onRender2D(EventRender2D event) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		ScaledResolution sr = new ScaledResolution(mc);
 		Option option = designSetting.getOption();
 		if(this.isEditing()){return;}
@@ -116,7 +116,7 @@ public class ModernHotbarMod extends HUDMod {
         }
     }
     
-	private void drawNanoVG(NanoVGManager nvg) {
+	private void drawNanoVG(NvRenderer nvg) {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
 		Option option = designSetting.getOption();

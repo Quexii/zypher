@@ -3,6 +3,7 @@ package me.eldodebug.soar.gui.modmenu.category.impl;
 import java.awt.Color;
 import java.io.File;
 
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import org.lwjgl.input.Keyboard;
 
 import me.eldodebug.soar.Glide;
@@ -15,7 +16,6 @@ import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.file.FileManager;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.ModManager;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.management.profile.Profile;
@@ -64,7 +64,7 @@ public class ProfileCategory extends Category {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ProfileManager profileManager = instance.getProfileManager();
 		ColorManager colorManager = instance.getColorManager();
 		AccentColor accentColor = colorManager.getCurrentColor();
@@ -200,7 +200,7 @@ public class ProfileCategory extends Category {
 		
 		Glide instance = Glide.getInstance();
 		ProfileManager profileManager = instance.getProfileManager();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ModManager modManager = instance.getModManager();
 		FileManager fileManager = instance.getFileManager();
 		

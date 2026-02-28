@@ -2,6 +2,7 @@ package me.eldodebug.soar.utils.buffer;
 
 import java.nio.FloatBuffer;
 
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import org.lwjgl.nanovg.NVGLUFramebuffer;
 import org.lwjgl.nanovg.NVGPaint;
 import org.lwjgl.nanovg.NanoVG;
@@ -10,7 +11,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl3.BufferUtils;
 
 import me.eldodebug.soar.Glide;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -25,7 +25,7 @@ public class ScreenAnimation {
 	public void wrap(Runnable glRender, Runnable task, float x, float y, float width, float height, float animationProgress, float alphaProgress, boolean stencil) {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		int factor = sr.getScaleFactor();
 		
 		if(fbWidth != mc.displayWidth || fbHeight != mc.displayHeight) {
@@ -113,7 +113,7 @@ public class ScreenAnimation {
 	
 	public void close() {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(fb != null) {
 			NanoVGGL2.nvgluDeleteFramebuffer(nvg.getContext(), fb);

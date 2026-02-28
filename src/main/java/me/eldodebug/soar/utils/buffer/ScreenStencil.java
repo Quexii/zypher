@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl3.BufferUtils;
 
 import me.eldodebug.soar.Glide;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 
@@ -24,7 +24,7 @@ public class ScreenStencil {
 	public void wrap(Runnable task, float x, float y, float width, float height, float radius, float alpha) {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		int factor = sr.getScaleFactor();
 		
 		if(fbWidth != mc.displayWidth || fbHeight != mc.displayHeight) {
@@ -71,7 +71,7 @@ public class ScreenStencil {
 	
 	public void close() {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(fb != null) {
 			NanoVGGL2.nvgluDeleteFramebuffer(nvg.getContext(), fb);

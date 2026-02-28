@@ -1,7 +1,6 @@
 package me.eldodebug.soar.injection.mixin.mixins.gui;
 
 import eu.shoroa.contrib.render.Blur;
-import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.GuiEditHUD;
 import me.eldodebug.soar.gui.modmenu.GuiModMenu;
 import me.eldodebug.soar.injection.interfaces.IMixinGuiIngame;
@@ -74,7 +73,9 @@ public abstract class MixinGuiIngame implements IMixinGuiIngame {
 
 	@Inject(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/GlStateManager;color(FFFF)V", shift = At.Shift.BEFORE, ordinal = 2))
 	public void postRenderGameOverlay(float partialTicks, CallbackInfo ci) {
-		Blur.render();
+		new EventPreRender2D(partialTicks).call();
+
+		Blur.capture();
 
 		new EventRenderDamageTint(partialTicks).call();
 

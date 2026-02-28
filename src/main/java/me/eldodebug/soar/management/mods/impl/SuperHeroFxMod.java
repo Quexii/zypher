@@ -8,7 +8,7 @@ import me.eldodebug.soar.management.event.impl.EventUpdate;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.Mod;
 import me.eldodebug.soar.management.mods.ModCategory;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.proj.Projection;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -85,7 +85,7 @@ public class SuperHeroFxMod extends Mod {
         double py = player.lastTickPosY + (player.posY - player.lastTickPosY) * event.getPartialTicks();
         double pz = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * event.getPartialTicks();
 
-        NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+        NvRenderer nvg = Glide.getInstance().getNanoVGManager();
         ScaledResolution sr = new ScaledResolution(mc);
         float scaleFactor = sr.getScaleFactor();
 

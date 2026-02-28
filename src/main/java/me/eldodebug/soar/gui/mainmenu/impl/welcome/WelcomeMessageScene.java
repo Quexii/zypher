@@ -5,7 +5,7 @@ import java.awt.Color;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.TimerUtils;
 import me.eldodebug.soar.utils.animation.normal.Animation;
@@ -34,7 +34,7 @@ public class WelcomeMessageScene extends MainMenuScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		String hello = "Hello!";
 		String welcomeMessage = "Welcome to Glide Client";
 		String setupMessage = "An Updated Version of Soar Client";

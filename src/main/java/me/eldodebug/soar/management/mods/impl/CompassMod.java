@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import org.lwjgl.nanovg.NVGColor;
 import org.lwjgl.nanovg.NanoVG;
 
@@ -16,8 +17,6 @@ import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.NumberSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.buffer.ScreenStencil;
 import net.minecraft.util.MathHelper;
@@ -39,7 +38,7 @@ public class CompassMod extends SimpleHUDMod {
 	public void onRender2D(EventRender2D event) {
 		
 		Option design = designSetting.getOption();
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(design.getTranslate().equals(TranslateText.SIMPLE)) {
 			this.draw();
@@ -207,7 +206,7 @@ public class CompassMod extends SimpleHUDMod {
 	
     private void renderMarker(float x, float y, Color color) {
     	
-    	NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+    	NvRenderer nvg = Glide.getInstance().getNanoVGManager();
     	long vg = nvg.getContext();
 		NVGColor nvgColor = nvg.getColor(color);
 		float scale = this.getScale();

@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.color.AccentColor;
-import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.mods.Mod;
-import me.eldodebug.soar.management.mods.ModCategory;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.ColorUtils;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
@@ -60,7 +57,7 @@ public class ClickEffects {
 		public void draw() {
 			
 			Glide instance = Glide.getInstance();
-			NanoVGManager nvg = instance.getNanoVGManager();
+			NvRenderer nvg = instance.getNanoVGManager();
 			AccentColor currentColor = instance.getColorManager().getCurrentColor();
 			
 			nvg.setupAndDraw(() -> {

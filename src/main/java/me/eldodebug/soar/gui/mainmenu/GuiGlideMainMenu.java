@@ -9,6 +9,7 @@ import me.eldodebug.soar.gui.mainmenu.impl.DiscontinuedSoar8;
 import me.eldodebug.soar.gui.mainmenu.impl.UpdateScene;
 import me.eldodebug.soar.gui.mainmenu.impl.welcome.*;
 import me.eldodebug.soar.gui.mainmenu.widget.WidgetMenuIconButton;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.types.Rect;
 import me.eldodebug.soar.types.Size;
 import me.eldodebug.soar.utils.Sound;
@@ -18,7 +19,6 @@ import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.impl.BackgroundScene;
 import me.eldodebug.soar.gui.mainmenu.impl.MainScene;
 import me.eldodebug.soar.management.event.impl.EventRenderNotification;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.management.profile.mainmenu.impl.Background;
@@ -28,7 +28,6 @@ import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
 import me.eldodebug.soar.utils.animation.normal.other.DecelerateAnimation;
 import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
-import me.eldodebug.soar.utils.mouse.MouseUtils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import org.lwjgl.nanovg.NanoVG;
@@ -101,7 +100,7 @@ public class GuiGlideMainMenu extends GuiScreen {
         ScaledResolution sr = new ScaledResolution(mc);
 
         Glide instance = Glide.getInstance();
-        NanoVGManager nvg = instance.getNanoVGManager();
+        NvRenderer nvg = instance.getNanoVGManager();
         boolean isFirstLogin = instance.isFirstLogin();
 
         backgroundAnimations[0].setAnimation(Mouse.getX(), 16);
@@ -132,7 +131,7 @@ public class GuiGlideMainMenu extends GuiScreen {
             }
         });
 
-        Blur.render(5f);
+        Blur.capture(5f);
 
         nvg.setupAndDraw(() -> {
 
@@ -162,7 +161,7 @@ public class GuiGlideMainMenu extends GuiScreen {
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
-    private void drawNanoVG(ScaledResolution sr, Glide instance, NanoVGManager nvg) {
+    private void drawNanoVG(ScaledResolution sr, Glide instance, NvRenderer nvg) {
 
         String copyright = "Copyright Mojang AB. Do not distribute!";
         nvg.drawBlurredText(copyright, sr.getScaledWidth() - (nvg.getTextWidth(copyright, 9, Fonts.REGULAR)) - 4, sr.getScaledHeight() - 12, Color.BLACK, 4f, 9, NanoVG.NVG_ALIGN_LEFT | NanoVG.NVG_ALIGN_TOP, Fonts.REGULAR);
@@ -171,7 +170,7 @@ public class GuiGlideMainMenu extends GuiScreen {
         nvg.drawText("Glide Client v" + instance.getVersion(), 4, sr.getScaledHeight() - 12, Color.WHITE, 9, Fonts.REGULAR);
     }
 
-    private void drawButtons(int mouseX, int mouseY, ScaledResolution sr, NanoVGManager nvg) {
+    private void drawButtons(int mouseX, int mouseY, ScaledResolution sr, NvRenderer nvg) {
         closeButton.setPosition(sr.getScaledWidth() - 28, 6);
         backgroundsButton.setPosition(sr.getScaledWidth() - 28 - 28, 6);
 
@@ -179,7 +178,7 @@ public class GuiGlideMainMenu extends GuiScreen {
         backgroundsButton.render(nvg, mouseX, mouseY);
     }
 
-    private void drawSplashScreen(ScaledResolution sr, NanoVGManager nvg) {
+    private void drawSplashScreen(ScaledResolution sr, NvRenderer nvg) {
 
         if (fadeIconAnimation == null) {
             fadeIconAnimation = new DecelerateAnimation(100, 1);
@@ -206,7 +205,7 @@ public class GuiGlideMainMenu extends GuiScreen {
         ScaledResolution sr = new ScaledResolution(mc);
 
         Glide instance = Glide.getInstance();
-        NanoVGManager nvg = instance.getNanoVGManager();
+        NvRenderer nvg = instance.getNanoVGManager();
         boolean isFirstLogin = instance.isFirstLogin();
 
         if (!isFirstLogin) {

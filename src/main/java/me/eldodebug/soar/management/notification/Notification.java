@@ -5,7 +5,7 @@ import java.awt.Color;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.color.AccentColor;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.ColorUtils;
 import me.eldodebug.soar.utils.TimerUtils;
@@ -40,12 +40,12 @@ public class Notification {
 	
 	public void draw() {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		screenAlpha.wrap(() -> drawNanoVG(nvg), animation.getValueFloat());
 	}
 	
-	private void drawNanoVG(NanoVGManager nvg) {
+	private void drawNanoVG(NvRenderer nvg) {
 		
 		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 		Glide instance = Glide.getInstance();

@@ -138,7 +138,6 @@ public class ModManager {
 		mods.add(new ZoomMod());
 		mods.add(new NoInvisMod());
 		mods.add(new ModESP());
-		mods.add(new SuperHeroFxMod());
 	}
 	
 	public ArrayList<Mod> getMods() {

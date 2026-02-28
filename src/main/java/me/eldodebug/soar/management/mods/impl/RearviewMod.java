@@ -13,7 +13,7 @@ import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.impl.rearview.RearviewCamera;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.NumberSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.utils.TimerUtils;
 
 public class RearviewMod extends HUDMod {
@@ -45,12 +45,12 @@ public class RearviewMod extends HUDMod {
 	@EventTarget
 	public void onRender2D(EventRender2D event) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		nvg.setupAndDraw(() -> drawNanoVG(nvg));
 	}
 	
-	private void drawNanoVG(NanoVGManager nvg) {
+	private void drawNanoVG(NvRenderer nvg) {
 		
 		int width = (int) (rearviewWidthSetting.getValueInt() * this.getScale());
 		int height = (int) (rearviewHeightSetting.getValueInt() * this.getScale());

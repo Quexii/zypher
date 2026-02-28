@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl3.BufferUtils;
 
 import me.eldodebug.soar.Glide;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import net.minecraft.client.Minecraft;
 
 public class ScreenAlpha {
@@ -22,7 +22,7 @@ public class ScreenAlpha {
 	
 	public void wrap(Runnable task, float alphaProgress) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(fbWidth != mc.displayWidth || fbHeight != mc.displayHeight) {
 			close();
@@ -67,7 +67,7 @@ public class ScreenAlpha {
 	
 	public void close() {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(fb != null) {
 			NanoVGGL2.nvgluDeleteFramebuffer(nvg.getContext(), fb);

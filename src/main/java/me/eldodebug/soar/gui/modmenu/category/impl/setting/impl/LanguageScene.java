@@ -9,7 +9,7 @@ import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.language.Language;
 import me.eldodebug.soar.management.language.LanguageManager;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.ColorUtils;
@@ -34,7 +34,7 @@ public class LanguageScene extends SettingScene {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorPalette palette = instance.getColorManager().getPalette();
 		AccentColor currentColor = instance.getColorManager().getCurrentColor();
 		LanguageManager languageManager = instance.getLanguageManager();

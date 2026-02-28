@@ -16,7 +16,7 @@ import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.event.impl.EventRender2D;
 import me.eldodebug.soar.management.event.impl.EventRenderNotification;
 import me.eldodebug.soar.management.mods.HUDMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.MathUtils;
 import me.eldodebug.soar.utils.animation.normal.Animation;
@@ -59,7 +59,7 @@ public class GuiEditHUD extends GuiScreen {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorPalette palette = instance.getColorManager().getPalette();
 		boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 		localMouseX = mouseX;
@@ -79,7 +79,7 @@ public class GuiEditHUD extends GuiScreen {
 			nvg.save();
 			NanoVG.nvgGlobalAlpha(nvg.getContext(), (float) introAnimation.getValue());
 			if (InternalSettingsMod.getInstance().getBlurSetting().isToggled()) {
-				Blur.drawBlur(() -> nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), Color.WHITE));
+				Blur.render(() -> nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), Color.WHITE));
 			}
 			nvg.restore();
 			nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0,0,0, (int) (introAnimation.getValue() * 100)));

@@ -5,7 +5,7 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import me.eldodebug.soar.Glide;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.GlUtils;
@@ -31,7 +31,7 @@ public class GuiSplashScreen {
 		
 		ScaledResolution sr = new ScaledResolution(mc);
 		int scaleFactor = sr.getScaleFactor();
-		NanoVGManager nvg = new NanoVGManager();
+		NvRenderer nvg = new NvRenderer();
 		
 		if(fadeAnimation == null) {
 			fadeAnimation = new DecelerateAnimation(1000, 1);

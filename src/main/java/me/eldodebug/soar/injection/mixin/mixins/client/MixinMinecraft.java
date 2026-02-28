@@ -555,7 +555,7 @@ public abstract class MixinMinecraft implements IMixinMinecraft {
 	@Inject(method = "startGame", at = @At(value = "INVOKE",
 			target = "Lnet/minecraft/client/gui/GuiIngame;<init>(Lnet/minecraft/client/Minecraft;)V"))
 	public void splashGuiIngame(CallbackInfo callback) {
-//		Blur.init();
+		Blur.init();
 		updateDisplay();
 	}
 

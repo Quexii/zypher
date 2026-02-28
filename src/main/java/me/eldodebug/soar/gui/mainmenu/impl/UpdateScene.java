@@ -5,15 +5,13 @@ import java.net.URI;
 
 import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.remote.update.Update;
 import me.eldodebug.soar.utils.mouse.MouseUtils;
-import net.minecraft.client.gui.GuiSelectWorld;
 import org.lwjgl.input.Keyboard;
 
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
-import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import net.minecraft.client.gui.ScaledResolution;
 
@@ -29,19 +27,19 @@ public class UpdateScene extends MainMenuScene {
 		ScaledResolution sr = new ScaledResolution(mc);
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		
 		nvg.setupAndDraw(() -> drawNanoVG(mouseX, mouseY, sr, instance, nvg));
 	}
 
-	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NanoVGManager nvg) {
+	private void drawNanoVG(int mouseX, int mouseY, ScaledResolution sr, Glide instance, NvRenderer nvg) {
 		nvg.drawRect(0,0, sr.getScaledWidth(), sr.getScaledHeight(), new Color(0,0,0, 100));
 		int acWidth = 220;
 		int acHeight = 190;
 		int acX = sr.getScaledWidth() / 2 - (acWidth / 2);
 		int acY = sr.getScaledHeight() / 2 - (acHeight / 2);
 		Update u = instance.getUpdateInstance();
-		Blur.drawBlur(acX, acY, acWidth, acHeight, 8);
+		Blur.render(acX, acY, acWidth, acHeight, 8);
 		nvg.drawRoundedRect(acX, acY, acWidth, acHeight, 8, this.getBackgroundColor());
 		nvg.drawCenteredText("Update Available", acX + (acWidth / 2), acY + 12, Color.WHITE, 14, Fonts.MEDIUM);
 		nvg.drawCenteredText("Would you like to update?", acX + (acWidth / 2), acY + 30, Color.WHITE, 9, Fonts.REGULAR);

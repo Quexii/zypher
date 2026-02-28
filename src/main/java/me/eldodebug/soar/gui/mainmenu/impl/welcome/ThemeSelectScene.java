@@ -8,7 +8,7 @@ import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.mainmenu.MainMenuScene;
 import me.eldodebug.soar.management.color.AccentColor;
 import me.eldodebug.soar.management.color.Theme;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.animation.normal.Animation;
 import me.eldodebug.soar.utils.animation.normal.Direction;
@@ -60,13 +60,13 @@ public class ThemeSelectScene extends MainMenuScene {
 	private void drawNanoVG() {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		AccentColor currentColor = instance.getColorManager().getCurrentColor();
 		
 		int offsetX = 0;
 		int index = 1;
 
-		Blur.drawBlur(x, y, width, height, 8);
+		Blur.render(x, y, width, height, 8);
 		nvg.drawRoundedRect(x, y, width, height, 8, this.getBackgroundColor());
 		nvg.drawCenteredText("Choose a theme", x + (width / 2), y + 14, Color.WHITE, 16, Fonts.MEDIUM);
 		nvg.drawRect(x, y + 27, width, 1, Color.WHITE);
@@ -103,7 +103,7 @@ public class ThemeSelectScene extends MainMenuScene {
 	
 	private void drawModMenuExample(float x, float y, Theme theme) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		float width = 90;
 		float height = 56;

@@ -11,8 +11,7 @@ import me.eldodebug.soar.management.mods.SimpleHUDMod;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
-import me.eldodebug.soar.management.nanovg.font.Fonts;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.utils.animation.simple.SimpleAnimation;
 
@@ -32,7 +31,7 @@ public class MemoryUsageMod extends SimpleHUDMod {
 	public void onRender2D(EventRender2D event) {
 		
 		Option design = designSetting.getOption();
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		
 		if(design.getTranslate().equals(TranslateText.SIMPLE)) {
 			this.draw();
@@ -41,7 +40,7 @@ public class MemoryUsageMod extends SimpleHUDMod {
 		}
 	}
 	
-	private void drawNanoVG(NanoVGManager nvg) {
+	private void drawNanoVG(NvRenderer nvg) {
 		
 		animation.setAnimation(((this.getUsingMemory() / 100F) * 360), 16);
 		

@@ -12,7 +12,7 @@ import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.management.nanovg.font.LegacyIcon;
 import me.eldodebug.soar.ui.comp.impl.CompComboBox;
@@ -45,7 +45,7 @@ public class AppearanceScene extends SettingScene {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         Glide instance = Glide.getInstance();
-        NanoVGManager nvg = instance.getNanoVGManager();
+        NvRenderer nvg = instance.getNanoVGManager();
         ColorManager colorManager = instance.getColorManager();
         ColorPalette palette = colorManager.getPalette();
         AccentColor currentColor = colorManager.getCurrentColor();

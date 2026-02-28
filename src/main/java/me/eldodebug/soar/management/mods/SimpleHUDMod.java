@@ -2,7 +2,7 @@ package me.eldodebug.soar.management.mods;
 
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.language.TranslateText;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 
 public class SimpleHUDMod extends HUDMod {
@@ -18,7 +18,7 @@ public class SimpleHUDMod extends HUDMod {
 	public void draw() {
 		
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		boolean hasIcon = getIcon() != null;
 		float addX = hasIcon ? this.getTextWidth(getIcon(), 9.5F, Fonts.LEGACYICON) + 4 : 0;
 		

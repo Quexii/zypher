@@ -1,6 +1,6 @@
 package me.eldodebug.soar.gui.widget;
 
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.types.Rect;
 import me.eldodebug.soar.types.Size;
 
@@ -20,7 +20,7 @@ public abstract class Widget {
         bounds.set(x, y, width, height);
     }
 
-    public abstract void render(NanoVGManager renderer, float mouseX, float mouseY);
+    public abstract void render(NvRenderer renderer, float mouseX, float mouseY);
     public abstract boolean mouseClicked(float mouseX, float mouseY, int button);
     public abstract boolean mouseReleased(float mouseX, float mouseY, int button);
 

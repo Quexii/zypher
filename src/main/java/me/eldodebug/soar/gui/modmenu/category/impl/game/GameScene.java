@@ -5,7 +5,7 @@ import me.eldodebug.soar.gui.modmenu.category.impl.GamesCategory;
 import me.eldodebug.soar.management.color.palette.ColorPalette;
 import me.eldodebug.soar.management.color.palette.ColorType;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 
 import java.awt.*;
 
@@ -67,9 +67,9 @@ public class GameScene {
 				: Math.max(nextValue, finalVal);
 	}
 
-	public void drawBackground(NanoVGManager nvg, ColorPalette palette) {
+	public void drawBackground(NvRenderer nvg, ColorPalette palette) {
 		if (InternalSettingsMod.getInstance().getBlurSetting().isToggled()) {
-			Blur.drawBlur(() -> nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  palette.getBackgroundColor(ColorType.DARK)));
+			Blur.render(() -> nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  palette.getBackgroundColor(ColorType.DARK)));
 			Color colsidebar = palette.getBackgroundColor(ColorType.DARK);
 			nvg.drawRect(getX(), getY(), getWidth(), getHeight(),  new Color(colsidebar.getRed(), colsidebar.getGreen(), colsidebar.getBlue(), 210));
 		} else {

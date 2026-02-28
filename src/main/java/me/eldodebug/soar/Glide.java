@@ -6,6 +6,7 @@ import java.util.Arrays;
 import me.eldodebug.soar.gui.mainmenu.GuiGlideMainMenu;
 import me.eldodebug.soar.gui.modmenu.GuiModMenu;
 import me.eldodebug.soar.management.mods.RestrictedMod;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.remote.blacklists.BlacklistManager;
 import me.eldodebug.soar.management.remote.discord.DiscordStats;
 import me.eldodebug.soar.management.remote.news.NewsManager;
@@ -26,7 +27,6 @@ import me.eldodebug.soar.management.file.FileManager;
 import me.eldodebug.soar.management.language.LanguageManager;
 import me.eldodebug.soar.management.mods.ModManager;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.management.notification.NotificationManager;
 import me.eldodebug.soar.management.profile.ProfileManager;
 import me.eldodebug.soar.management.quickplay.QuickPlayManager;
@@ -34,11 +34,9 @@ import me.eldodebug.soar.management.screenshot.ScreenshotManager;
 import me.eldodebug.soar.management.security.SecurityFeatureManager;
 import me.eldodebug.soar.management.waypoint.WaypointManager;
 import me.eldodebug.soar.utils.OptifineUtils;
-import me.eldodebug.soar.utils.render.EntityProjection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
-import org.lwjgl.opengl.Display;
 
 public class Glide {
 
@@ -48,7 +46,7 @@ public class Glide {
 	private String name, version;
 	private int verIdentifier;
 	
-	private NanoVGManager nanoVGManager;
+	private NvRenderer nanoVGManager;
 	private FileManager fileManager;
 	private LanguageManager languageManager;
 	private EventManager eventManager;
@@ -180,7 +178,7 @@ public class Glide {
 		return eventManager;
 	}
 
-	public NanoVGManager getNanoVGManager() {
+	public NvRenderer getNanoVGManager() {
 		return nanoVGManager;
 	}
 
@@ -204,7 +202,7 @@ public class Glide {
 		return screenshotManager;
 	}
 
-	public void setNanoVGManager(NanoVGManager nanoVGManager) {
+	public void setNanoVGManager(NvRenderer nanoVGManager) {
 		this.nanoVGManager = nanoVGManager;
 	}
 

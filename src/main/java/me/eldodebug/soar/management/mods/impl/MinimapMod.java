@@ -2,6 +2,7 @@ package me.eldodebug.soar.management.mods.impl;
 
 import java.awt.Color;
 
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import org.lwjgl.opengl.GL11;
 
 import me.eldodebug.soar.Glide;
@@ -13,7 +14,6 @@ import me.eldodebug.soar.management.mods.HUDMod;
 import me.eldodebug.soar.management.mods.impl.minimap.ChunkAtlas;
 import me.eldodebug.soar.management.mods.impl.minimap.ChunkTile;
 import me.eldodebug.soar.management.mods.settings.impl.NumberSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
 import me.eldodebug.soar.utils.GlUtils;
 import me.eldodebug.soar.utils.buffer.ScreenStencil;
 import me.eldodebug.soar.utils.render.RenderUtils;
@@ -44,7 +44,7 @@ public class MinimapMod extends HUDMod {
 	@EventTarget
 	public void onRender2D(EventRender2D event) {
 		
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		int width = widthSetting.getValueInt();
 		int height = heightSetting.getValueInt();
 		

@@ -1,33 +1,27 @@
 package me.eldodebug.soar.management.mods.impl;
 
-import eu.shoroa.contrib.data.Rect;
+import eu.shoroa.contrib.render.Blur;
 import me.eldodebug.soar.Glide;
 import me.eldodebug.soar.management.event.EventTarget;
-import me.eldodebug.soar.management.event.impl.EventRender2D;
+import me.eldodebug.soar.management.event.impl.EventPreRender2D;
 import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.Mod;
 import me.eldodebug.soar.management.mods.ModCategory;
 import me.eldodebug.soar.management.mods.settings.impl.BooleanSetting;
 import me.eldodebug.soar.management.mods.settings.impl.NumberSetting;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
-import me.eldodebug.soar.utils.MathUtils;
+import me.eldodebug.soar.types.Color;
 import me.eldodebug.soar.utils.render.EntityProjection;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-
-import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.opengl.Display;
 
 public class ModESP extends Mod {
     private static ModESP instance;
-
-    private final Map<Entity, String> entityData = new HashMap<>();
 
     private NumberSetting range = new NumberSetting(TranslateText.RANGE, this, 100, 10, 500, true);
     private BooleanSetting showPlayers = new BooleanSetting(TranslateText.PLAYER_LIST, this, true);
@@ -45,91 +39,43 @@ public class ModESP extends Mod {
     }
 
     @EventTarget
-    private void onRender2D(EventRender2D event) {
+    private void onRender2D(EventPreRender2D event) {
         if (mc.theWorld == null) return;
 
-        EntityProjection projection = EntityProjection.getInstance();
-        Map<Entity, Rect> positionMap = projection.getPositionMap();
+        NvRenderer renderer = Glide.getInstance().getNanoVGManager();
 
-        entityData.clear();
-        for (Entity entity : mc.theWorld.loadedEntityList) {
-            if (entity == mc.thePlayer) continue;
-            if (entity.getDistanceToEntity(mc.thePlayer) > range.getValueFloat()) continue;
+        renderer.setupAndDraw(() -> {
+            renderer.scissor(1f, 1f, Display.getWidth() - 2f, Display.getHeight() - 2f);
 
-            if (entity instanceof EntityPlayer && !showPlayers.isToggled()) continue;
-            if (entity instanceof EntityMob && !showMobs.isToggled()) continue;
-            if (entity instanceof EntityAnimal && !showAnimals.isToggled()) continue;
-            if (!(entity instanceof EntityPlayer) && !(entity instanceof EntityMob) && !(entity instanceof EntityAnimal) && !showOther.isToggled())
-                continue;
+            Color a = new Color(195, 145, 145, 255);
+            Color b = new Color(95, 55, 55, 255);
 
-            int distance = (int) entity.getDistanceToEntity(mc.thePlayer);
-            String name = (entity instanceof EntityPlayer) ? entity.getName() : entity.getClass().getSimpleName();
-            String info = name + " (" + distance + "m)";
-            entityData.put(entity, info);
-        }
+            EntityProjection.getInstance().getPositionMap().forEach((entity, rect) -> {
+                boolean isSelf = entity == mc.thePlayer;
+                boolean inRange = entity.getDistanceToEntity(mc.thePlayer) > range.getValueFloat();
+                boolean isPlayer = entity instanceof EntityPlayer && !showPlayers.isToggled();
+                boolean isMob = entity instanceof EntityMob && !showMobs.isToggled();
+                boolean isAnimal = entity instanceof EntityAnimal && !showAnimals.isToggled();
+                boolean isOther = !(entity instanceof EntityPlayer) && !(entity instanceof EntityMob) && !(entity instanceof EntityAnimal) && !showOther.isToggled();
 
-        NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
-        ScaledResolution sr = new ScaledResolution(mc);
-        float scaleFactor = sr.getScaleFactor();
+                float distance = entity.getDistanceToEntity(mc.thePlayer);
+                float clamped = 1f - (distance / range.getValueFloat());
 
-        nvg.setupAndDraw(() -> {
-            positionMap.forEach((entity, rect) -> {
-                if (!entityData.containsKey(entity)) return;
+                if (!(isSelf || inRange || isPlayer || isMob || isAnimal || isOther)) {
+                    renderer.stroke(rect, 0xFF000000, 3.5f);
+                    renderer.linearStroke(rect, rect.x, rect.y, rect.x, rect.y + rect.height, a.toARGB(), b.toARGB(), 1f);
 
-                float x = rect.x / scaleFactor;
-                float y = rect.y / scaleFactor;
-                float width = rect.width / scaleFactor;
-                float height = rect.height / scaleFactor;
-
-                Color boxColor = Color.WHITE;
-                if (entity instanceof EntityPlayer) {
-                    boxColor = new Color(255, 85, 85);
-                } else if (entity instanceof EntityMob) {
-                    boxColor = new Color(255, 100, 100);
-                } else if (entity instanceof EntityAnimal) {
-                    boxColor = new Color(85, 255, 85);
-                }
-
-                String info = entityData.get(entity);
-                String[] parts = info.split(" ");
-                int distance = Integer.parseInt(parts[1].replace("(", "").replace("m)", ""));
-
-                float alpha = MathUtils.clamp(1f - (distance / range.getValueFloat()), 0.2f, 1f);
-
-                float distanceRatio = distance / range.getValueFloat();
-                float textScale = MathUtils.clamp(1.5f - (distanceRatio * 1.0f), 0.5f, 1.5f);
-                float fontSize = 7f * textScale;
-                float glowSize = 2f * textScale;
-
-                float infoWidth = nvg.getTextWidth(info, fontSize, Fonts.REGULAR);
-                float boxHeight = 12f * textScale;
-                float boxPadding = 2f * textScale;
-                float textOffsetY = 16f * textScale;
-
-                nvg.save();
-                nvg.setAlpha(alpha);
-                nvg.drawOutlineRoundedRect(x,y,width,height,0f,1f,Color.BLACK);
-                nvg.drawOutlineRoundedRect(x,y,width,height,0f,0.5f,boxColor);
-
-                if (entity instanceof EntityLivingBase) {
-                    float health = ((EntityLivingBase) entity).getHealth() / ((EntityLivingBase) entity).getMaxHealth();
-
-                    nvg.drawRect(x - 3, y, 2, height, Color.BLACK);
-                    nvg.drawRect(x - 2.5f, y + 0.5f + height - (height) * health, 1f, (height - 1) * health, Color.GREEN);
-
-                    int armor = ((EntityLivingBase) entity).getTotalArmorValue();
-
-                    if (armor > 0) {
-                        float armorHeight = (height / 20f) * armor;
-                        nvg.drawRect(x + width + 1, y + height - armorHeight, 2, armorHeight, Color.BLUE);
-                        nvg.drawRect(x + width + 1.5f, y + height - armorHeight + 0.5f, 1f, armorHeight - 1f, Color.CYAN);
+                    if (entity instanceof EntityLivingBase) {
+                        float healthPercent = ((EntityLivingBase) entity).getHealth() / ((EntityLivingBase) entity).getMaxHealth();
+                        renderer.drawRect(rect.x - 6, rect.y - 2, 3, rect.height + 4, 0xFF000000);
+                        renderer.drawRect(rect.x - 5, rect.y - 1 + (1 - healthPercent) * (rect.height + 2), 1, healthPercent * (rect.height + 2), 0xFF00FF00);
                     }
-                }
 
-                nvg.drawTextGlowing(info, x + (width / 2f) - (infoWidth / 2f), y - textOffsetY + (boxHeight - fontSize) / 2f, Color.BLACK, glowSize, fontSize, Fonts.REGULAR);
-                nvg.drawText(info, x + (width / 2f) - (infoWidth / 2f), y - textOffsetY + (boxHeight - fontSize) / 2f, Color.WHITE, fontSize, Fonts.REGULAR);
-                nvg.restore();
+                    renderer.drawBlurredText(entity.getName(), rect.x + rect.width / 2f, rect.y - 8, 0xFF000000, 1f, 10f, NanoVG.NVG_ALIGN_CENTER | NanoVG.NVG_ALIGN_MIDDLE, Fonts.SEMIBOLD);
+                    renderer.drawCenteredText(entity.getName(), rect.x + rect.width / 2f, rect.y - 8, 0xFFFFFFFF, 10f, Fonts.SEMIBOLD);
+                }
             });
-        });
+            renderer.resetScissor();
+        }, false);
     }
 }

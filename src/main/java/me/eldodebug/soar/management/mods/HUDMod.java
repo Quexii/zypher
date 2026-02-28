@@ -12,7 +12,7 @@ import me.eldodebug.soar.management.language.TranslateText;
 import me.eldodebug.soar.management.mods.impl.InternalSettingsMod;
 import me.eldodebug.soar.management.mods.settings.impl.ComboSetting;
 import me.eldodebug.soar.management.mods.settings.impl.combo.Option;
-import me.eldodebug.soar.management.nanovg.NanoVGManager;
+import me.eldodebug.soar.management.nanovg.NvRenderer;
 import me.eldodebug.soar.management.nanovg.font.Font;
 import me.eldodebug.soar.management.nanovg.font.Fonts;
 import me.eldodebug.soar.utils.ColorUtils;
@@ -60,7 +60,7 @@ public class HUDMod extends Mod {
 	public void save() {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.save();
 	}
@@ -68,7 +68,7 @@ public class HUDMod extends Mod {
 	public void restore() {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.restore();
 	}
@@ -76,7 +76,7 @@ public class HUDMod extends Mod {
 	public void scissor(float addX, float addY, float width, float height) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.scissor(x + (addX * scale), y + (addY * scale), width * scale, height * scale);
 	}
@@ -84,7 +84,7 @@ public class HUDMod extends Mod {
 	public void drawPlayerHead(ResourceLocation location, float addX, float addY, float width, float height, float radius) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawPlayerHead(location, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
 	}
@@ -92,7 +92,7 @@ public class HUDMod extends Mod {
 	public void drawRoundedImage(int texture, float addX, float addY, float width, float height, float radius) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawRoundedImage(texture, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
 	}
@@ -100,7 +100,7 @@ public class HUDMod extends Mod {
 	public void drawRoundedImage(File file, float addX, float addY, float width, float height, float radius, float alpha) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawRoundedImage(file, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale, alpha);
 	}
@@ -112,7 +112,7 @@ public class HUDMod extends Mod {
 	public void drawRoundedImage(ResourceLocation location, float addX, float addY, float width, float height, float radius) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawRoundedImage(location, x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
 	}
@@ -120,7 +120,7 @@ public class HUDMod extends Mod {
 	public void drawArc(float addX, float addY, float radius, float startAngle, float endAngle, float strokeWidth, Color color) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawArc(x + (addX * scale), y + (addY * scale), radius * scale, startAngle, endAngle, strokeWidth * scale, color);
 	}
@@ -132,7 +132,7 @@ public class HUDMod extends Mod {
 	public void drawShadow(float addX, float addY, float width, float height, float radius) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawShadow(x + (addX * scale), y + (addY * scale), width * scale, height * scale, radius * scale);
 	}
@@ -140,7 +140,7 @@ public class HUDMod extends Mod {
 	public void drawRect(float addX, float addY, float width, float height, Color color) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		nvg.drawRect(x + (addX * scale), y + (addY * scale), width * scale, height * scale, color);
 	}
@@ -152,7 +152,7 @@ public class HUDMod extends Mod {
 	public void drawRoundedRect(float addX, float addY, float width, float height, float radius, Color color) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 
 		if(width < 0) {
 			return;
@@ -172,7 +172,7 @@ public class HUDMod extends Mod {
 	public void drawBackground(float addX, float addY, float width, float height, float radius) {
 
 		Glide instance = Glide.getInstance();
-		NanoVGManager nvg = instance.getNanoVGManager();
+		NvRenderer nvg = instance.getNanoVGManager();
 		ColorManager colorManager = instance.getColorManager();
 		AccentColor currentColor = colorManager.getCurrentColor();
 		ComboSetting setting = InternalSettingsMod.getInstance().getModThemeSetting();
@@ -198,7 +198,7 @@ public class HUDMod extends Mod {
 		float y = this.y + (addY * scale);
 
 //		if (isBlur) ShBlur.getInstance().drawBlur(x,y,lastWidth,lastHeight,radius);
-		if (isBlur) Blur.drawBlur(x,y,lastWidth,lastHeight,radius);
+		if (isBlur) Blur.render(x,y,lastWidth,lastHeight,radius);
 
 		if(isNormal || isVanilla || isShadow || isDark || isLight || isModern) {
 			nvg.drawShadow(x, y, lastWidth, lastHeight, radius - 0.75F);
@@ -256,7 +256,7 @@ public class HUDMod extends Mod {
 			addY = addY - 1.3F;
 		}
 
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		float lastSize = size * scale;
 		Option theme = InternalSettingsMod.getInstance().getModThemeSetting().getOption();
 		boolean isText = theme.getTranslate().equals(TranslateText.TEXT);
@@ -273,7 +273,7 @@ public class HUDMod extends Mod {
 
 	public void scale(float addX, float addY, float width, float height, float nvgScale) {
 
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 
 		nvg.scale(x + (addX * scale), y + (addY * scale), width * scale, height * scale, nvgScale);
 	}
@@ -288,7 +288,7 @@ public class HUDMod extends Mod {
 			addY = addY - 1F;
 		}
 
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 		float lastSize = size * scale;
 
 		nvg.drawCenteredText(text, x + (addX * scale), y + (addY * scale), color, lastSize, font);
@@ -300,7 +300,7 @@ public class HUDMod extends Mod {
 
 	public float getTextWidth(String text, float size, Font font) {
 
-		NanoVGManager nvg = Glide.getInstance().getNanoVGManager();
+		NvRenderer nvg = Glide.getInstance().getNanoVGManager();
 
 		return nvg.getTextWidth(text, size, font);
 	}
